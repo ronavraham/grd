@@ -12224,11 +12224,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\temp\\GRD\\GRD\\GRD.csproj",
+      "projectUniqueName": "C:\\Users\\רון אברהם\\Source\\Repos\\grd\\GRD\\GRD\\GRD.csproj",
       "projectName": "GRD",
-      "projectPath": "C:\\temp\\GRD\\GRD\\GRD.csproj",
+      "projectPath": "C:\\Users\\רון אברהם\\Source\\Repos\\grd\\GRD\\GRD\\GRD.csproj",
       "packagesPath": "C:\\Users\\רון אברהם\\.nuget\\packages\\",
-      "outputPath": "C:\\temp\\GRD\\GRD\\obj\\",
+      "outputPath": "C:\\Users\\רון אברהם\\Source\\Repos\\grd\\GRD\\GRD\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

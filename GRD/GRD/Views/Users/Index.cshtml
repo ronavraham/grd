@@ -4,56 +4,82 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>מסך משתמשים</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">צור חדש</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            חפש לפי: 
+            <select name="FilterType" style="height:27px;">
+                <option selected="@((string)ViewData["filterType"] == "שם משתמש")">שם משתמש</option>
+                <option selected="@((string)ViewData["filterType"] == "סיסמא")">סיסמא</option>
+                <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
+            </select>
+            <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default" style="height: 27px;padding: 0 0 0 0;width: 70px;margin-top: -2px;"/> |
+            <a asp-action="Index">בחזרה לרשימה מלאה</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th style="text-align:right">
                 @Html.DisplayNameFor(model => model.Username)
             </th>
-            <th>
+            <th style="text-align:right">
                 @Html.DisplayNameFor(model => model.Password)
             </th>
-            <th>
+            <th style="text-align:right">
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
+            <th style="text-align:right">
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
-            <th>
+            <th style="text-align:right">
                 @Html.DisplayNameFor(model => model.IsAdmin)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAdmin)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @{
+                        if (item.Gender == false)
+                        { <text>זכר</text> }
+                    else
+                    { <text>נקבה</text> }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (item.IsAdmin == false)
+                        { <text>לא</text> }
+                    else
+                    { <text>כן</text> }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">ראה עוד</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

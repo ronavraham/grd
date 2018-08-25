@@ -19,9 +19,27 @@ namespace GRD.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string filterType)
         {
-            return View(await _context.Users.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["FilterType"] = filterType;
+            var users = _context.Users.Select(s => s);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                switch (filterType)
+                {
+                    case "שם משתמש":
+                        users = users.Where(s => s.Username.Contains(searchString));
+                        break;
+                    case "סיסמא":
+                        users = users.Where(s => s.Password.Contains(searchString));
+                        break;
+                    case "כתובת":
+                        users = users.Where(s => s.Address.Contains(searchString));
+                        break;
+                }
+            }
+            return View(await users.AsNoTracking().ToListAsync());
         }
 
         // GET: Users/Details/5
