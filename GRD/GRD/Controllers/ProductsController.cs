@@ -53,7 +53,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Price,Name,size,id")] Product product)
+        public async Task<IActionResult> Create([Bind("Price,Name,Size,id")] Product product)
         {
             if (ModelState.IsValid)
             {
