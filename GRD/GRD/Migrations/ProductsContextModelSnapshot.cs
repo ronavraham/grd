@@ -30,6 +30,8 @@ namespace GRD.Migrations
 
                     b.Property<int>("Size");
 
+                    b.Property<string>("PictureName");
+
                     b.HasKey("id");
 
                     b.ToTable("Products");

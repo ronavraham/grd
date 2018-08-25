@@ -14,6 +14,7 @@ namespace GRD.Migrations
                     Price = table.Column<double>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: true),
+                    PictureName = table.Column<string>(nullable:true),
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
