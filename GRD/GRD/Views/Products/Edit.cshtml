@@ -1,16 +1,12 @@
 ﻿@model EFGetStarted.AspNetCore.NewDb.Models.Product
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<h2>@ViewData["Title"]</h2>
 
-<h2>Edit</h2>
-
-<h4>Product</h4>
+<h4>מוצר</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -23,20 +19,27 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="size" class="control-label"></label>
-                <input asp-for="size" class="form-control" />
-                <span asp-validation-for="size" class="text-danger"></span>
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <p>במידה והשארת את שדה זה ריק, התמונה של המוצר תישאר כמו לפני העדכון</p>
+                <div class="col-md-10">
+                    <input type="file" name="file" />
+                </div>
+            </div>
+            <input type="hidden" asp-for="PictureName" />
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="עדכן" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">בחזרה לרשימת המוצרים המלאה</a>
 </div>
 
 @section Scripts {

@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFGetStarted.AspNetCore.NewDb.Models
 {
@@ -14,9 +16,15 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
 
     public class Product
     {
-        public float Price { get; set; }
-        public string Name { get; set; }
-        public string size { get; set; }
+        [Display(Name = "מזהה")]
         public int id { get; set; }
+        [Display(Name = "שם")]
+        public string Name { get; set; }
+        [Display(Name = "מחיר")]
+        public double Price { get; set; }
+        [Display(Name = "גודל")]
+        public int Size { get; set; }
+        [Display(Name = "תמונה")]
+        public string PictureName { get; set; }
     }
 }

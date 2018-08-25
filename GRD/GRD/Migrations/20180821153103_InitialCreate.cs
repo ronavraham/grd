@@ -11,9 +11,10 @@ namespace GRD.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Price = table.Column<float>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    size = table.Column<string>(nullable: true),
+                    Size = table.Column<int>(nullable: true),
+                    PictureName = table.Column<string>(nullable:true),
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
