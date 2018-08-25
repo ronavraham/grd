@@ -3,7 +3,7 @@
 <h2>@ViewData["Title"]</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">צור חדש</a>
 </p>
 <table class="table">
     <thead>
@@ -18,7 +18,7 @@
                 @Html.DisplayNameFor(model => model.Size)
             </th>
             <th style="text-align:right">
-                תמונה
+                @Html.DisplayNameFor(model => model.PictureName)
             </th>
         </tr>
     </thead>
@@ -36,12 +36,12 @@
             </td>
             <td>
                 <img style="height: 10vh;width: 6vw;" 
-                     src=@System.String.Format("/images/products/{0}.jpg",item.id) />
+                     src=@System.String.Format("/images/products/{0}",item.PictureName) />
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id">עריכה</a> |
+                <a asp-action="Details" asp-route-id="@item.id">פירוט</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">מחיקה</a>
             </td>
         </tr>
 }

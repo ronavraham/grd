@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EFGetStarted.AspNetCore.NewDb.Models;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace GRD.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ProductsContext _context;
+
+        private const string _staticImagesRoute = "wwwroot/images/products/";
 
         public ProductsController(ProductsContext context)
         {
@@ -28,6 +33,7 @@ namespace GRD.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["Title"] = "פירוט";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +52,7 @@ namespace GRD.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewData["Title"] = "יצירת מוצר חדש";
             return View();
         }
 
@@ -54,20 +61,35 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Price,Name,Size,id")] Product product)
+        public async Task<IActionResult> Create(IFormFile file,[Bind("Price,Name,Size,id")] Product product)
         {
+            // get the image name and save the path to the saved pictures
+            var filePath = _staticImagesRoute + file.FileName;
+
+            // save the image name to the pictureName property so we get it later for the view
+            product.PictureName = file.FileName;
+
+            // save the picture to the static path
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // save to DB
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(product);
         }
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Title"] = "עריכת מוצר קיים";
             if (id == null)
             {
                 return NotFound();
@@ -86,11 +108,32 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,size,id")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,id,PictureName")] Product product, IFormFile file)
         {
             if (id != product.id)
             {
                 return NotFound();
+            }
+
+            // case the user put new image to update
+            if(file != null)
+            {
+                // Set full path to file 
+                string FileToDelete = _staticImagesRoute + product.PictureName,
+                       fileToUpdate = _staticImagesRoute + file.FileName;
+
+                // Delete the previus image file
+                FileInfo deleteFile = new FileInfo(FileToDelete);
+                deleteFile.Delete();
+
+                // put the new picture name to product object
+                product.PictureName = file.FileName;
+
+                // save the picture to the static path
+                using (var stream = new FileStream(fileToUpdate, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
             }
 
             if (ModelState.IsValid)
@@ -99,6 +142,7 @@ namespace GRD.Controllers
                 {
                     _context.Update(product);
                     await _context.SaveChangesAsync();
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,6 +163,7 @@ namespace GRD.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["Title"] = "מחיקת מוצר";
             if (id == null)
             {
                 return NotFound();
@@ -140,6 +185,9 @@ namespace GRD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
+            // delete the product image from fs
+            FileInfo deleteFile = new FileInfo(_staticImagesRoute + product.PictureName);
+            deleteFile.Delete();
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
