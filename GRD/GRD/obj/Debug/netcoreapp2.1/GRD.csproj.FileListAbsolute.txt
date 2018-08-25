@@ -84,3 +84,7 @@ C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\GRD.
 C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\GRD.dll
 C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\GRD.pdb
 C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\GRD.csproj.CopyComplete
+C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\Razor\Views\Login\Index.g.cshtml.cs
+C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\Razor\Views\Users\Login.g.cshtml.cs
+C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\Razor\Views\Users\NotFound.g.cshtml.cs
+C:\Users\רון אברהם\Source\Repos\grd\GRD\GRD\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs

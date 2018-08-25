@@ -33,7 +33,8 @@ namespace GRD
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
+            services.AddSession();
 
             var connection = @"Server=tcp:webproject2018.database.windows.net,1433;Initial Catalog=WebProject2018;Persist Security Info=False;
                                User ID=ronavrham;Password=Dbpaa2018;MultipleActiveResultSets=False;Encrypt=True;
@@ -59,12 +60,13 @@ namespace GRD
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Users}/{action=Index}/{id?}");
+                    template: "{controller=Users}/{action=Login}/{id?}");
             });
         }
     }
