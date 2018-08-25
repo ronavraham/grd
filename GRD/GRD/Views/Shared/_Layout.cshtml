@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,7 +20,7 @@
 </head>
 <body dir="rtl">
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container" >
+        <div class="container">
             <div class="navbar-header" style="float:right">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -31,8 +33,9 @@
             <div class="navbar-collapse collapse" style="float:right">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">מסך הבית</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">אודות</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">צור קשר</a></li>
+                    <li><a asp-area="" asp-controller="Products" asp-action="Index">מוצרים</a></li>
+                    <li><a asp-area="" asp-controller="Branches" asp-action="Index">סניפים</a></li>
+                    <li><a asp-area="" asp-controller="Users" asp-action="Index">משתמשים</a></li>
                 </ul>
             </div>
         </div>
