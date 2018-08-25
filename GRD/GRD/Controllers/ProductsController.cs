@@ -21,6 +21,7 @@ namespace GRD.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            ViewData["Title"] = "מסך מוצרים";
             return View(await _context.Products.ToListAsync());
         }
 
