@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EFGetStarted.AspNetCore.NewDb.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GRD.Controllers
 {
@@ -23,6 +24,11 @@ namespace GRD.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
             ViewData["FilterType"] = filterType;
+            var isAdmin = HttpContext.Session.GetString("isAdmin");
+            if (isAdmin == null || isAdmin.CompareTo("yes") < 0)
+            {
+                return RedirectToAction("Index", "Home", null);
+            }
             var users = _context.Users.Select(s => s);
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -149,6 +155,29 @@ namespace GRD.Controllers
             }
 
             return View(user);
+        }
+
+        // GET: Users/Login/5
+        public async Task<IActionResult> Login(string userName, string password)
+        {
+            if (userName == null || password == null)
+            {
+                return View();
+            }
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == userName && u.Password == password);
+            if (user == null)
+            {
+                return View("Views/Users/NotFound.cshtml");
+            }
+            HttpContext.Session.SetString("isAdmin", user.IsAdmin ? "yes" : "no");
+            HttpContext.Session.SetString("username", user.Username);
+
+            if (user.IsAdmin)
+            {
+                return RedirectToAction("Index", null);
+            }
+            return RedirectToAction("Index", "Home", null);
         }
 
         // POST: Users/Delete/5
