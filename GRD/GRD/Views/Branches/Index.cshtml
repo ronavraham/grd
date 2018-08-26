@@ -7,30 +7,24 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">צור חדש</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Lat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Long)
-            </th>
-            <th>
+            <th class="branch-th">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="branch-th">
                 @Html.DisplayNameFor(model => model.City)
             </th>
-            <th>
+            <th class="branch-th">
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
+            <th class="branch-th">
                 @Html.DisplayNameFor(model => model.Telephone)
             </th>
-            <th>
+            <th class="branch-th">
                 @Html.DisplayNameFor(model => model.IsSaturday)
             </th>
             <th></th>
@@ -39,12 +33,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Long)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -58,12 +46,16 @@
                 @Html.DisplayFor(modelItem => item.Telephone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSaturday)
+                @{
+                    if (item.IsSaturday)
+                    { <text>כן</text> }
+                else
+                { <text>לא</text> }
+                }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
             </td>
         </tr>
 }

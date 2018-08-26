@@ -11,8 +11,8 @@ namespace GRD.Migrations.Branches
                 name: "Branches",
                 columns: table => new
                 {
-                    Lat = table.Column<float>(nullable: false),
-                    Long = table.Column<float>(nullable: false),
+                    Lat = table.Column<double>(nullable: false),
+                    Long = table.Column<double>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
