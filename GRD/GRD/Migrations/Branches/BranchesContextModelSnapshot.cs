@@ -30,9 +30,9 @@ namespace GRD.Migrations.Branches
 
                     b.Property<bool>("IsSaturday");
 
-                    b.Property<float>("Lat");
+                    b.Property<double>("Lat");
 
-                    b.Property<float>("Long");
+                    b.Property<double>("Long");
 
                     b.Property<string>("Name");
 

@@ -24,8 +24,8 @@ namespace GRD.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
             ViewData["FilterType"] = filterType;
-            var isAdmin = HttpContext.Session.GetString("isAdmin");
-            if (isAdmin == null || isAdmin.CompareTo("yes") < 0)
+            var isAdmin = HttpContext.Session.GetString("isAdmin") == "true" ? true : false;
+            if (!isAdmin)
             {
                 return RedirectToAction("Index", "Home", null);
             }
@@ -170,7 +170,7 @@ namespace GRD.Controllers
             {
                 return View("Views/Users/NotFound.cshtml");
             }
-            HttpContext.Session.SetString("isAdmin", user.IsAdmin ? "yes" : "no");
+            HttpContext.Session.SetString("isAdmin", user.IsAdmin ? "true" : "false");
             HttpContext.Session.SetString("username", user.Username);
 
             if (user.IsAdmin)

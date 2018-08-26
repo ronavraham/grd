@@ -1,0 +1,26 @@
+﻿.index-table-th {
+    text-align: right;
+}
+
+.index-search-select {
+    height: 27px;
+}
+
+.index-submit-button {
+    height: 27px;
+    padding: 0 0 0 0;
+    width: 70px;
+    margin-top: -2px;
+}
+
+.create-form-container {
+    float: right;
+}
+
+.update-form-container {
+    float: right;
+}
+
+.delete-label {
+    width: 100px;
+}

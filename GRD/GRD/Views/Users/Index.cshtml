@@ -13,13 +13,13 @@
     <div class="form-actions no-color">
         <p>
             חפש לפי: 
-            <select name="FilterType" style="height:27px;">
+            <select name="FilterType" class="index-search-select">
                 <option selected="@((string)ViewData["filterType"] == "שם משתמש")">שם משתמש</option>
                 <option selected="@((string)ViewData["filterType"] == "סיסמא")">סיסמא</option>
                 <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
             </select>
             <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default" style="height: 27px;padding: 0 0 0 0;width: 70px;margin-top: -2px;"/> |
+            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button"/> |
             <a asp-action="Index">בחזרה לרשימה מלאה</a>
         </p>
     </div>
@@ -27,19 +27,19 @@
 <table class="table">
     <thead>
         <tr>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Username)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Password)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.IsAdmin)
             </th>
             <th></th>

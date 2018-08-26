@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<EFGetStarted.AspNetCore.NewDb.Models.Product>
-
+@using Microsoft.AspNetCore.Http
 <h2>@ViewData["Title"]</h2>
 
 <p>
@@ -8,42 +8,50 @@
 <table class="table">
     <thead>
         <tr>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Size)
             </th>
-            <th style="text-align:right">
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.PictureName)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                <img style="height: 10vh;width: 6vw;" 
-                     src=@System.String.Format("/images/products/{0}",item.PictureName) />
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">עריכה</a> |
-                <a asp-action="Details" asp-route-id="@item.id">פירוט</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">מחיקה</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    <img style="height: 10vh;width: 6vw;"
+                         src=@System.String.Format("/images/products/{0}",item.PictureName) />
+                </td>
+                <td>
+                    @{
+                        var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+                        if (isAdmin)
+                        {
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.id">ערוך</a> |
+                                <a asp-action="Delete" asp-route-id="@item.id">מחק</a>
+                            </div>
+                        }
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

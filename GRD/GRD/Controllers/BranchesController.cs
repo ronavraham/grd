@@ -19,9 +19,28 @@ namespace GRD.Controllers
         }
 
         // GET: Branches
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string filterType)
         {
-            return View(await _context.Branches.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["FilterType"] = filterType;
+
+            var branches = _context.Branches.Select(x => x);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                switch (filterType)
+                {
+                    case "שם":
+                        branches = branches.Where(x => x.Name.Contains(searchString));
+                        break;
+                    case "עיר":
+                        branches = branches.Where(x => x.City.Contains(searchString));
+                        break;
+                    case "כתובת":
+                        branches = branches.Where(x => x.Address.Contains(searchString));
+                        break;
+                }
+            }
+            return View(await branches.AsNoTracking().ToListAsync());
         }
 
         // GET: Branches/Details/5
