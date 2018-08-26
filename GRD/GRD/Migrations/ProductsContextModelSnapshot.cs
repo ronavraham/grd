@@ -26,9 +26,11 @@ namespace GRD.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<float>("Price");
+                    b.Property<double>("Price");
 
-                    b.Property<string>("size");
+                    b.Property<int>("Size");
+
+                    b.Property<string>("PictureName");
 
                     b.HasKey("id");
 

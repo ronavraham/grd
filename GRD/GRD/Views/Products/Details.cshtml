@@ -1,13 +1,9 @@
 ﻿@model EFGetStarted.AspNetCore.NewDb.Models.Product
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h2>Details</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div>
-    <h4>Product</h4>
+    <h4>מוצר</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,14 +19,21 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.size)
+            @Html.DisplayNameFor(model => model.Size)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.size)
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PictureName)
+        </dt>
+        <dd>
+            <img style="height: 10vh;width: 6vw;"
+                 src=@System.String.Format("/images/products/{0}",Model.PictureName) />
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.id">ערוך</a> |
+    <a asp-action="Index">בחזרה לרשימה המלאה</a>
 </div>
