@@ -5,7 +5,7 @@
 <h4>מוצר</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 create-form-container">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -24,7 +24,7 @@
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <p>במידה והשארת את שדה זה ריק, התמונה של המוצר תישאר כמו לפני העדכון</p>
+                <b>במידה והשארת את שדה זה ריק, התמונה של המוצר תישאר כמו לפני העדכון</b>
                 <div class="col-md-10">
                     <input type="file" name="file" />
                 </div>
