@@ -19,69 +19,119 @@
                 <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
             </select>
             <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button"/> |
+            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button" /> |
             <a asp-action="Index">בחזרה לרשימה מלאה</a>
         </p>
     </div>
 </form>
-<table class="table">
-    <thead>
-        <tr>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Telephone)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.IsSaturday)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="branches_map_table_container">
+    <table class="table branches_table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telephone)
-                </td>
-                <td>
-                    @{
-                        if (item.IsSaturday)
-                        { <text>כן</text> }
-                    else
-                    { <text>לא</text> }
-                    }
-                </td>
-                <td>
-                    @{
-                        var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
-                        if (isAdmin)
-                        {
-                            <div>
-                                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                                <a asp-action="Delete" asp-route-id = "@item.Id">מחק</a>
-                            </div>
-                        }
-                    }
-                </td>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Telephone)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.IsSaturday)
+                </th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telephone)
+                    </td>
+                    <td>
+                        @{
+                            if (item.IsSaturday)
+                            { <text>כן</text> }
+                        else
+                        { <text>לא</text> }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+                            if (isAdmin)
+                            {
+                                <div>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="branches_index_map" class="branches_index_map"></div>
+</div>
+<script>
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('branches_index_map'), {
+            center: { lat: 31.771, lng: 35.217 },
+            zoom: 9
+        });
+
+        //var marker = new google.maps.Marker({
+            //position: { lat: 31.771, lng: 35.217 },
+            //map: map,
+            //animation: google.maps.Animation.DROP,
+          //  title: 'Hello World!'
+        //});
+
+        var branches = [];
+        @foreach(var x in Model)
+        {
+            @: branches.push({ lat: @x.Lat, lng: @x.Long, name: '@x.Name', city: '@x.City', address: '@x.Address', phone: '@x.Telephone' });
         }
-    </tbody>
-</table>
+
+        branches.map(x => {
+            var marker = new google.maps.Marker({
+                position: { lat: x.lat, lng: x.lng },
+                animation: google.maps.Animation.DROP,
+                map: map
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: generateContent(x)
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        });
+    }
+
+    function generateContent(branch) {
+        return '<div class="branches_map_window_info">' +
+            '<div>שם סניף: ' + branch.name + '<div></br>' +
+            '<div>עיר: ' + branch.city + '<div></br>' +
+            '<div>כתובת: ' + branch.address + '<div></br>' +
+            '<div>טלפון: ' + branch.phone + '<div></br>' +
+       '</div>'
+    }
+</script>

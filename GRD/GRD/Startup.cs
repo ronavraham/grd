@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace GRD
 {
@@ -31,6 +34,11 @@ namespace GRD
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.Configure<WebEncoderOptions>(options =>
+            {
+                options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
