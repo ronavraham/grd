@@ -1,0 +1,18 @@
+﻿.branches_index_map {
+    height: 100%;
+    width: 50%;
+}
+
+.branches_map_window_info {
+    margin: 8px;
+}
+
+.branches_map_table_container {
+    display: flex;
+    height: 100%;
+}
+
+.branches_table {
+    width: 50%;
+    margin-left: 16px;
+}
