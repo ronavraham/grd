@@ -34,6 +34,9 @@ namespace GRD.Controllers
         public async Task<IActionResult> Search(int Price, string Name, int Size)
         {
             ViewData["Title"] = "מסך מוצרים";
+            ViewData["ProductsPriceQuery"] = Price;
+            ViewData["ProductsNameQuery"] = Name;
+            ViewData["ProductsSizeQuery"] = Size;
             var searchQuery = _context.Products.Select(s => s);
             if (Price != 0)
             {
