@@ -30,6 +30,26 @@ namespace GRD.Controllers
             return View(await _context.Products.ToListAsync());
         }
 
+        // GET: Products by query
+        public async Task<IActionResult> Search(int Price, string Name, int Size)
+        {
+            ViewData["Title"] = "מסך מוצרים";
+            var searchQuery = _context.Products.Select(s => s);
+            if (Price != 0)
+            {
+                searchQuery = searchQuery.Where(s => s.Price.Equals(Price));
+            }
+            if (!String.IsNullOrEmpty(Name))
+            {
+                searchQuery = searchQuery.Where(s => s.Name.Contains(Name));
+            }
+            if (Size != 0)
+            {
+                searchQuery = searchQuery.Where(s => s.Size.Equals(Size));
+            }
+            return View("Index", await searchQuery.AsNoTracking().ToListAsync());
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -61,7 +81,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file,[Bind("Price,Name,Size,id")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id")] Product product)
         {
             // get the image name and save the path to the saved pictures
             var filePath = _staticImagesRoute + file.FileName;
@@ -116,7 +136,7 @@ namespace GRD.Controllers
             }
 
             // case the user put new image to update
-            if(file != null)
+            if (file != null)
             {
                 // Set full path to file 
                 string FileToDelete = _staticImagesRoute + product.PictureName,
@@ -142,7 +162,7 @@ namespace GRD.Controllers
                 {
                     _context.Update(product);
                     await _context.SaveChangesAsync();
-                    
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
