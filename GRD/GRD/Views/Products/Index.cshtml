@@ -5,6 +5,22 @@
 <p>
     <a asp-action="Create">צור חדש</a>
 </p>
+
+<form asp-action="Search" method="get">
+    <div class="form-actions no-color">
+        <p>
+            חפש:
+            <div>@Html.DisplayNameFor(model => model.Price)</div>
+            <input type="number" name="Price" class="form-control" />
+            <div>@Html.DisplayNameFor(model => model.Name)</div>
+            <input type="text" name="Name" class="form-control" />
+            <div>@Html.DisplayNameFor(model => model.Size)</div>
+            <input type="number" name="Size" class="form-control" />
+            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button" /> |
+            <a asp-action="Index">בחזרה לרשימה מלאה</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
