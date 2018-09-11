@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GRD.Data;
+using GRD.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EFGetStarted.AspNetCore.NewDb.Models;
 
 namespace GRD.Controllers
 {
     public class BranchesController : Controller
     {
-        private readonly BranchesContext _context;
+        private readonly ProjectContext _context;
 
-        public BranchesController(BranchesContext context)
+        public BranchesController(ProjectContext context)
         {
             _context = context;
         }

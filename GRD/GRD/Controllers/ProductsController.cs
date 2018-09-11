@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EFGetStarted.AspNetCore.NewDb.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-using System.Threading;
+using GRD.Models;
+using GRD.Data;
 
 namespace GRD.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ProductsContext _context;
+        private readonly ProjectContext _context;
 
         private const string _staticImagesRoute = "wwwroot/images/products/";
 
-        public ProductsController(ProductsContext context)
+        public ProductsController(ProjectContext context)
         {
             _context = context;
         }
@@ -63,7 +62,7 @@ namespace GRD.Controllers
             }
 
             var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -133,7 +132,7 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,id,PictureName")] Product product, IFormFile file)
         {
-            if (id != product.id)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -169,7 +168,7 @@ namespace GRD.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.id))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -193,7 +192,7 @@ namespace GRD.Controllers
             }
 
             var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -218,7 +217,7 @@ namespace GRD.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

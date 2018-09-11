@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.AspNetCore.Http;
+using GRD.Models;
+using GRD.Data;
 
 namespace GRD.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UsersContext _context;
+        private readonly ProjectContext _context;
 
-        public UsersController(UsersContext context)
+        public UsersController(ProjectContext context)
         {
             _context = context;
         }
