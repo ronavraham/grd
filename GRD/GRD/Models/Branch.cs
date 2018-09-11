@@ -2,20 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace EFGetStarted.AspNetCore.NewDb.Models
+namespace GRD.Models
 {
-    public class BranchesContext : DbContext
-    {
-        public BranchesContext(DbContextOptions<BranchesContext> options)
-            : base(options)
-        { }
-
-        public DbSet<Branch> Branches { get; set; }
-    }
-
     public class Branch
     {
+        [Key]
+        public int Id { get; set; }
         [DisplayName("קו רוחב")]
         public double Lat { get; set; }
         [DisplayName("קו אורך")]
@@ -23,17 +17,14 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
         [DisplayName("שם")]
         public string Name { get; set; }
         [DisplayName("עיר")]
-
         public string City { get; set; }
         [DisplayName("כתובת")]
-
         public string Address { get; set; }
         [DisplayName("טלפון")]
-
         public string Telephone { get; set; }
         [DisplayName("פתוח בשבת")]
-
         public Boolean IsSaturday { get; set; }
-        public int Id { get; set; }
+        // add for relations with Purchases
+        public List<Purchase> Purchases { get; set; }
     }
 }
