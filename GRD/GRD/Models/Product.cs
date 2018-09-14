@@ -1,23 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace EFGetStarted.AspNetCore.NewDb.Models
+namespace GRD.Models
 {
-    public class ProductsContext : DbContext
-    {
-        public ProductsContext(DbContextOptions<ProductsContext> options)
-            : base(options)
-        { }
-
-        public DbSet<Product> Products { get; set; }
-    }
-
     public class Product
     {
+        [Key]
         [Display(Name = "מזהה")]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "שם")]
         public string Name { get; set; }
         [Display(Name = "מחיר")]
@@ -26,5 +17,7 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
         public int Size { get; set; }
         [Display(Name = "תמונה")]
         public string PictureName { get; set; }
+        // add for relations with Purchases
+        public List<Purchase> Purchases { get; set; }
     }
 }

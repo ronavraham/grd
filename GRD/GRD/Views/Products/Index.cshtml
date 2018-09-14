@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EFGetStarted.AspNetCore.NewDb.Models.Product>
+﻿@model IEnumerable<GRD.Models.Product>
 @using Microsoft.AspNetCore.Http
 <h2>@ViewData["Title"]</h2>
 
@@ -61,8 +61,8 @@
                         if (isAdmin)
                         {
                             <div>
-                                <a asp-action="Edit" asp-route-id="@item.id">ערוך</a> |
-                                <a asp-action="Delete" asp-route-id="@item.id">מחק</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
                             </div>
                         }
                     }
