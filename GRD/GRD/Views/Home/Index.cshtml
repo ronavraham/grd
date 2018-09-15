@@ -16,17 +16,28 @@
 
     function fetchNearestBranch(position) {
         $.ajax({
-            type: "GET",
-            url: "/Home/AjaxGetCall",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (res) {
-                alert(res)
-            },
+            type: 'GET',
+            url: '/Home/AjaxGetCall',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: getWeather,
             data: {
                 lng: position.coords.longitude,
                 lat: position.coords.latitude
             }
+        })
+    }
+
+    function getWeather(branch) {
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/weather',
+            data: {
+                lat: branch.lat,
+                lon: branch.long,
+                units: 'metric',
+                APPID: '50e5e552a74c7defcc7607a0fce0fdf6'
+            },
+            success: function (res) { debugger;}
         })
     }
 </script>
