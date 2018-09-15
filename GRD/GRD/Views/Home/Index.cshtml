@@ -4,4 +4,29 @@
 }
 
 <h2>מסך הבית</h2>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(getLocation)
 
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(fetchNearestBranch)
+        }
+    }
+
+    function fetchNearestBranch(position) {
+        $.ajax({
+            type: "GET",
+            url: "/Home/AjaxGetCall",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (res) {
+                alert(res)
+            },
+            data: {
+                lng: position.coords.longitude,
+                lat: position.coords.latitude
+            }
+        })
+    }
+</script>
