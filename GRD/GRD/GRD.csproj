@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="DisplayTemplates\" />
+    <Folder Include="docs\images\" />
   </ItemGroup>
 
 </Project>
