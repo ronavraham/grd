@@ -7,16 +7,23 @@
 <div class='home_container'>
     <div class='weather_container'>
         <div class='weather_branch_details'>
-            <div id='branch_name' />
-            <div>
-                <label id='branch_city' />
-                <label id='branch_address' />
+            <div id='branch_name'></div>
+            <div class='branch_address_container'>
+                <div id='branch_city'></div>
+                <div id='branch_address'></div>
             </div>
-            <div id='branch_phone' />
+            <div id='branch_phone'></div>
         </div>
         <div class='weather_details'>
-            <img id='weather_img' />
-            <div id='weather_degrees' />
+            <div class='degrees_and_img'>
+                <img id='weather_img' />
+                <div class='weather_degrees_container'>
+                    <div class='degrees_sign'>C°</div>
+                    <div id='weather_degrees' class='degrees'></div>
+                </div>
+            </div>
+            <div id='humidity'></div>
+            <div id='wind_speed'></div>
         </div>
     </div>
 </div>
@@ -58,6 +65,14 @@
     }
 
     function showWeatherDetails(branch, weather) {
-        $('#branch_name').html(branch.name)
+        $('#branch_name').html('הסניף הקרוב אלייך: ' + branch.name);
+        $('#branch_city').html(branch.city);
+        $('#branch_address').html(', ' + branch.address);
+        $('#branch_phone').html('טלפון: ' + branch.telephone);
+        $('#weather_degrees').html(weather.main.temp);
+        $('#humidity').html('לחות: ' + weather.main.humidity + '%');
+        $('#wind_speed').html('רוח: ' + weather.wind.speed + ' קמ"ש');
+        $('#weather_img').attr('src', 'http://openweathermap.org/img/w/' + weather.weather[0].icon + '.png');
+        $('.weather_container').css('visibility', 'visible');
     }
 </script>
