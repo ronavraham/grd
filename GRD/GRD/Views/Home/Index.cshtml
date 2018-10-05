@@ -4,4 +4,75 @@
 }
 
 <h2>מסך הבית</h2>
+<div class='home_container'>
+    <div class='weather_container'>
+        <div class='weather_branch_details'>
+            <div id='branch_name'></div>
+            <div class='branch_address_container'>
+                <div id='branch_city'></div>
+                <div id='branch_address'></div>
+            </div>
+            <div id='branch_phone'></div>
+        </div>
+        <div class='weather_details'>
+            <div class='degrees_and_img'>
+                <img id='weather_img' />
+                <div class='weather_degrees_container'>
+                    <div class='degrees_sign'>C°</div>
+                    <div id='weather_degrees' class='degrees'></div>
+                </div>
+            </div>
+            <div id='humidity'></div>
+            <div id='wind_speed'></div>
+        </div>
+    </div>
+</div>
+<script src='~/lib/jquery/dist/jquery.js'></script>
+<script>
+    $(document).ready(getLocation)
 
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(fetchNearestBranch)
+        }
+    }
+
+    function fetchNearestBranch(position) {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/AjaxGetCall',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: getWeather,
+            data: {
+                lng: position.coords.longitude,
+                lat: position.coords.latitude
+            }
+        })
+    }
+
+    function getWeather(branch) {
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/weather',
+            data: {
+                lat: branch.lat,
+                lon: branch.long,
+                units: 'metric',
+                APPID: '50e5e552a74c7defcc7607a0fce0fdf6'
+            },
+            success: function (res) { showWeatherDetails(branch, res) }
+        })
+    }
+
+    function showWeatherDetails(branch, weather) {
+        $('#branch_name').html('הסניף הקרוב אלייך: ' + branch.name);
+        $('#branch_city').html(branch.city);
+        $('#branch_address').html(', ' + branch.address);
+        $('#branch_phone').html('טלפון: ' + branch.telephone);
+        $('#weather_degrees').html(weather.main.temp);
+        $('#humidity').html('לחות: ' + weather.main.humidity + '%');
+        $('#wind_speed').html('רוח: ' + weather.wind.speed + ' קמ"ש');
+        $('#weather_img').attr('src', 'http://openweathermap.org/img/w/' + weather.weather[0].icon + '.png');
+        $('.weather_container').css('visibility', 'visible');
+    }
+</script>
