@@ -4,7 +4,23 @@
 }
 
 <h2>מסך הבית</h2>
-<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class='home_container'>
+    <div class='weather_container'>
+        <div class='weather_branch_details'>
+            <div id='branch_name' />
+            <div>
+                <label id='branch_city' />
+                <label id='branch_address' />
+            </div>
+            <div id='branch_phone' />
+        </div>
+        <div class='weather_details'>
+            <img id='weather_img' />
+            <div id='weather_degrees' />
+        </div>
+    </div>
+</div>
+<script src='~/lib/jquery/dist/jquery.js'></script>
 <script>
     $(document).ready(getLocation)
 
@@ -37,7 +53,11 @@
                 units: 'metric',
                 APPID: '50e5e552a74c7defcc7607a0fce0fdf6'
             },
-            success: function (res) { debugger;}
+            success: function (res) { showWeatherDetails(branch, res) }
         })
+    }
+
+    function showWeatherDetails(branch, weather) {
+        $('#branch_name').html(branch.name)
     }
 </script>
