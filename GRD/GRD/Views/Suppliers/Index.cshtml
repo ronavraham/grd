@@ -1,0 +1,50 @@
+﻿@model IEnumerable<GRD.Models.Supplier>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>ספקים</h2>
+
+<p>
+    <a asp-action="Create">צור חדש</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="index-table-th">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="index-table-th">
+                @Html.DisplayNameFor(model => model.Products)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @{
+                    var productsArray = item.Products.ToArray();
+                    for (int i = 0; i < productsArray.Length; i++)
+                    {
+                        @Html.DisplayFor(p => productsArray[i].Name);
+                        if (i != productsArray.Length - 1)
+                        {
+                            @:,
+                        }
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
