@@ -23,7 +23,6 @@ namespace GRD.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
             ViewData["FilterType"] = filterType;
-
             var branches = _context.Branches.Select(x => x);
             if (!String.IsNullOrEmpty(searchString))
             {
