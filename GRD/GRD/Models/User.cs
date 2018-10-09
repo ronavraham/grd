@@ -21,6 +21,6 @@ namespace GRD.Models
         [Display(Name = "האם מנהל")]
         public Boolean IsAdmin { get; set; }
         // add for relations with Purchases
-        public List<Purchase> Purchases { get; set; }
+        public virtual List<Purchase> Purchases { get; set; }
     }
 }

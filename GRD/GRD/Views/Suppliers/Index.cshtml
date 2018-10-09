@@ -4,16 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>ספקים</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">צור חדש</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="index-table-th">
+                @Html.DisplayNameFor(model => model.Products)
             </th>
             <th></th>
         </tr>
@@ -25,9 +28,21 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @{
+                    var productsArray = item.Products.ToArray();
+                    for (int i = 0; i < productsArray.Length; i++)
+                    {
+                        @Html.DisplayFor(p => productsArray[i].Name);
+                        if (i != productsArray.Length - 1)
+                        {
+                            @:,
+                        }
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
             </td>
         </tr>
 }

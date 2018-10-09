@@ -78,6 +78,8 @@ namespace GRD.Data
             new Product{Name="חולצה",Size=48,Price=51,PictureName="1.jpg", Supplier = suppliers[0]},
             new Product{Name="מכנס",Size=44,Price=11,PictureName="Chrysanthemum.jpg", Supplier = suppliers[1]},
             new Product{Name="קקקק",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
+            new Product{Name="אאאא",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
+            new Product{Name="בבבב",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
             };
             foreach (Product e in products)
             {

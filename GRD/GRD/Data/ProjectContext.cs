@@ -13,5 +13,13 @@ namespace GRD.Data
         public ProjectContext(DbContextOptions<ProjectContext> options)
             : base(options)
         { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Supplier)
+                .WithMany(b => b.Products)
+                .HasForeignKey(p => p.SupplierForeignKey);
+        }
     }
 }

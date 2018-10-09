@@ -19,8 +19,11 @@ namespace GRD.Models
         [Display(Name = "תמונה")]
         public string PictureName { get; set; }
         // add for relations with Purchases
-        public List<Purchase> Purchases { get; set; }
+        public virtual List<Purchase> Purchases { get; set; }
+
+        public int SupplierForeignKey { get; set; }
+
         [ForeignKey("SupplierForeignKey")]
-        public Supplier Supplier { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

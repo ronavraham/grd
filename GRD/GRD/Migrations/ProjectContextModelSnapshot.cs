@@ -58,7 +58,7 @@ namespace GRD.Migrations
 
                     b.Property<int>("Size");
 
-                    b.Property<int?>("SupplierForeignKey");
+                    b.Property<int>("SupplierForeignKey");
 
                     b.HasKey("Id");
 
@@ -132,7 +132,8 @@ namespace GRD.Migrations
                 {
                     b.HasOne("GRD.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("SupplierForeignKey");
+                        .HasForeignKey("SupplierForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GRD.Models.Purchase", b =>

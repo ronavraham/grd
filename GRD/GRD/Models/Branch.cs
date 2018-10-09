@@ -25,6 +25,6 @@ namespace GRD.Models
         [DisplayName("פתוח בשבת")]
         public Boolean IsSaturday { get; set; }
         // add for relations with Purchases
-        public List<Purchase> Purchases { get; set; }
+        public virtual List<Purchase> Purchases { get; set; }
     }
 }

@@ -8,6 +8,8 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using GRD.Models;
 using GRD.Data;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GRD.Controllers
 {
@@ -75,6 +77,7 @@ namespace GRD.Controllers
         public IActionResult Create()
         {
             ViewData["Title"] = "יצירת מוצר חדש";
+            PopulateSuppliersDropDownList();
             return View();
         }
 
@@ -83,7 +86,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierForeignKey")] Product product)
         {
             // get the image name and save the path to the saved pictures
             var filePath = _staticImagesRoute + file.FileName;
@@ -97,13 +100,22 @@ namespace GRD.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            // save to DB
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // save to DB
+                if (ModelState.IsValid)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (RetryLimitExceededException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.)
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+            PopulateSuppliersDropDownList(product.SupplierForeignKey);
 
             return View(product);
         }
@@ -122,6 +134,7 @@ namespace GRD.Controllers
             {
                 return NotFound();
             }
+            PopulateSuppliersDropDownList(product.SupplierForeignKey);
             return View(product);
         }
 
@@ -130,7 +143,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,id,PictureName")] Product product, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierForeignKey")] Product product, IFormFile file)
         {
             if (id != product.Id)
             {
@@ -179,7 +192,16 @@ namespace GRD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            PopulateSuppliersDropDownList(product.SupplierForeignKey);
             return View(product);
+        }
+
+        private void PopulateSuppliersDropDownList(object selectedSupplier = null)
+        {
+            var suppliersQuery = from d in _context.Suppliers
+                                   orderby d.Name
+                                   select d;
+            ViewBag.SupplierForeignKey = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
         }
 
         // GET: Products/Delete/5

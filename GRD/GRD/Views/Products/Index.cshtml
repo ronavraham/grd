@@ -34,6 +34,9 @@
                 @Html.DisplayNameFor(model => model.Size)
             </th>
             <th class="index-table-th">
+                @Html.DisplayNameFor(model => model.Supplier.Name)
+            </th>
+            <th class="index-table-th">
                 @Html.DisplayNameFor(model => model.PictureName)
             </th>
         </tr>
@@ -50,6 +53,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
                 </td>
                 <td>
                     <img style="height: 10vh;width: 6vw;"
