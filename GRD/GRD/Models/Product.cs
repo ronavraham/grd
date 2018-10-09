@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GRD.Models
 {
@@ -19,5 +20,7 @@ namespace GRD.Models
         public string PictureName { get; set; }
         // add for relations with Purchases
         public List<Purchase> Purchases { get; set; }
+        [ForeignKey("SupplierForeignKey")]
+        public Supplier Supplier { get; set; }
     }
 }

@@ -49,6 +49,24 @@ namespace GRD.Data
             }
             context.SaveChanges();
 
+            // Look for any Branches.
+            if (context.Suppliers.Any())
+            {
+                return;   // DB has been seeded
+            }
+            var suppliers = new Supplier[]
+            {
+            new Supplier{Name="ZARA"},
+            new Supplier{Name="H&M"},
+            new Supplier{Name="ADIDAS"},
+            };
+
+            foreach (Supplier s in suppliers)
+            {
+                context.Suppliers.Add(s);
+            }
+            context.SaveChanges();
+
             // Look for any Products.
             if (context.Products.Any())
             {
@@ -57,14 +75,15 @@ namespace GRD.Data
 
             var products = new Product[]
             {
-            new Product{Name="חולצה",Size=48,Price=51,PictureName="1.jpg"},
-            new Product{Name="מכנס",Size=44,Price=11,PictureName="Chrysanthemum.jpg"},
-            new Product{Name="קקקק",Size=23,Price=88,PictureName="Desert.jpg"},
+            new Product{Name="חולצה",Size=48,Price=51,PictureName="1.jpg", Supplier = suppliers[0]},
+            new Product{Name="מכנס",Size=44,Price=11,PictureName="Chrysanthemum.jpg", Supplier = suppliers[1]},
+            new Product{Name="קקקק",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
             };
             foreach (Product e in products)
             {
                 context.Products.Add(e);
             }
+
             context.SaveChanges();
         }
     }
