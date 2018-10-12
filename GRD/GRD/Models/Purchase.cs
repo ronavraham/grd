@@ -19,12 +19,12 @@ namespace GRD.Models
         public DateTime PurchaseDate { get; set; }
         [ForeignKey("ProductId")]
         [Display(Name = "מוצר")]
-        public Product Product { get; set; }
+        public virtual  Product Product { get; set; }
         [ForeignKey("BranchId")]
         [Display(Name = "סניף")]
-        public Branch Branch { get; set; }
+        public virtual  Branch Branch { get; set; }
         [ForeignKey("UserId")]
         [Display(Name = "משתמש")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

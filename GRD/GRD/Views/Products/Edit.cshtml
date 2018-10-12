@@ -1,43 +1,51 @@
 ﻿@model GRD.Models.Product
 
-<div class='page_title_container'>
-    <h2 class='page_title'>עריכת מוצר</h2>
-</div>
+<h2>@ViewData["Title"]</h2>
 
-<div class='create_edit_form_container'>
-    <form asp-action="Edit" method="post" enctype="multipart/form-data" class='create_edit_form'>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Price" class="control-label"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Size" class="control-label"></label>
-            <input asp-for="Size" class="form-control" />
-            <span asp-validation-for="Size" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <b>*במידה והשארת את שדה זה ריק, התמונה של המוצר תישאר כמו לפני העדכון</b>
-            <div class="col-md-10">
-                <input type="file" name="file" />
+<h4>מוצר</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 create-form-container">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-        </div>
-        <input type="hidden" asp-for="PictureName" />
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group form_footer">
-            <input type="submit" value="שמור" class="btn btn-default button" />
-            <a asp-action="Index">בחזרה לרשימת המוצרים המלאה</a>
-        </div>
-    </form>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.Name" class="control-label"></label>
+                @Html.DropDownList("SupplierForeignKey", String.Empty)
+            </div>
+            <div class="form-group">
+                <b>במידה והשארת את שדה זה ריק, התמונה של המוצר תישאר כמו לפני העדכון</b>
+                <div class="col-md-10">
+                    <input type="file" name="file" />
+                </div>
+            </div>
+            <input type="hidden" asp-for="PictureName" />
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="עדכן" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
 </div>
 
-</br>
+<div>
+    <a asp-action="Index">בחזרה לרשימת המוצרים המלאה</a>
+</div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

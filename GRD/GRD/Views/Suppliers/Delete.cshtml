@@ -1,0 +1,22 @@
+﻿@model GRD.Models.Supplier
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>מחיקת ספק</h2>
+
+<h3>האם אתה בטוח כי ברצונך למחוק את הספק?</h3>
+<div>
+    <hr />
+    <div>
+        <label class="delete-label">@Html.DisplayNameFor(model => model.Name):</label>
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="מחק" class="btn btn-default" /> |
+        <a asp-action="Index">בחזרה לרשימת ספקים</a>
+    </form>
+</div>

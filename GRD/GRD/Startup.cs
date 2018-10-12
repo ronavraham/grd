@@ -39,8 +39,8 @@ namespace GRD
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
             services.AddSession();
 
-            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=GolanLocal;Trusted_Connection=True;MultipleActiveResultSets=true";
-            services.AddDbContext<ProjectContext>(options => options.UseSqlServer(connection));
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=RonLocal;Trusted_Connection=True;MultipleActiveResultSets=true";
+            services.AddDbContext<ProjectContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

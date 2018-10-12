@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GRD.Migrations
 {
-    public partial class ProjectCreate : Migration
+    public partial class Projectcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,19 +28,16 @@ namespace GRD.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Suppliers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    Size = table.Column<int>(nullable: false),
-                    PictureName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +55,29 @@ namespace GRD.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    Size = table.Column<int>(nullable: false),
+                    PictureName = table.Column<string>(nullable: true),
+                    SupplierForeignKey = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Suppliers_SupplierForeignKey",
+                        column: x => x.SupplierForeignKey,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +116,11 @@ namespace GRD.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_SupplierForeignKey",
+                table: "Products",
+                column: "SupplierForeignKey");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Purchases_BranchId",
                 table: "Purchases",
                 column: "BranchId");
@@ -124,6 +149,9 @@ namespace GRD.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Suppliers");
         }
     }
 }
