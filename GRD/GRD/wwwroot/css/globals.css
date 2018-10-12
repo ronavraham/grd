@@ -15,9 +15,20 @@
 
 .create_edit_form_container {
     margin-right: 128px;
+    margin-left: 128px;
     margin-top: 16px;
     display: flex;
     justify-content: center;
+}
+
+.delete_form_container {
+    margin-right: 128px;
+    margin-left: 128px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .create_edit_form {
