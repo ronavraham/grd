@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<GRD.Models.Supplier>
-
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,9 +8,17 @@
     <h2 class='page_title'>מסך ספקים</h2>
 </div>
 
-<div class='page_plus_button branches_index_plus_button'>
-    <a class='page_plus_text' asp-action="Create">+</a>
-</div>
+@{
+    var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+    if (isAdmin)
+    {
+        <div class='page_plus_button branches_index_plus_button'>
+            <a class='page_plus_text' asp-action="Create">+</a>
+        </div>
+    }
+}
+
+
 <div class='page_content_container'>
     <table class="table">
         <thead>
@@ -45,8 +53,15 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                        @{
+                            if (isAdmin)
+                            {
+                                <div>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                                </div>
+                            }
+                        }
                     </td>
                 </tr>
             }
