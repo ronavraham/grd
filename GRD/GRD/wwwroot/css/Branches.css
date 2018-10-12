@@ -13,6 +13,14 @@
 }
 
 .branches_table {
+    
+}
+
+.branches_form_table_container {
     width: 50%;
     margin-left: 16px;
+}
+
+.brances_content_container {
+    height: 100%;
 }
