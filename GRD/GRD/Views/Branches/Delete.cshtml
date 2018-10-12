@@ -4,48 +4,51 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>מחק סניף</h2>
+<div class='page_title_container'>
+    <h2 class='page_title'>מחיקת סניף</h2>
+</div>
 
-<h3>אתה בטוח שברצונך למחוק סניף זה?</h3>
-<div>
-    <hr />
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Name):</label>
-        @Html.DisplayFor(model => model.Name)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.City):</label>
-        @Html.DisplayFor(model => model.City)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Address):</label>
-        @Html.DisplayFor(model => model.Address)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Telephone):</label>
-        @Html.DisplayFor(model => model.Telephone)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.IsSaturday):</label>
-        @{
-            if (Model.IsSaturday)
-            { <text>כן</text> }
-        else
-        { <text>לא</text> }
-        }
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Long):</label>
-        @Html.DisplayFor(model => model.Long)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Lat):</label>
-        @Html.DisplayFor(model => model.Lat)
-    </div>
+<div class='delete_form_container'>
+    <h3>אתה בטוח שברצונך למחוק סניף זה?</h3>
+    <div class='create_edit_form'>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Name):</label>
+            @Html.DisplayFor(model => model.Name)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.City):</label>
+            @Html.DisplayFor(model => model.City)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Address):</label>
+            @Html.DisplayFor(model => model.Address)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Telephone):</label>
+            @Html.DisplayFor(model => model.Telephone)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.IsSaturday):</label>
+            @{
+                if (Model.IsSaturday)
+                { <text>כן</text> }
+            else
+            { <text>לא</text> }
+            }
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Long):</label>
+            @Html.DisplayFor(model => model.Long)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Lat):</label>
+            @Html.DisplayFor(model => model.Lat)
+        </div>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="מחק" class="btn btn-default" /> |
-        <a asp-action="Index">בחזרה לרשימת הסניפים</a>
-    </form>
+        <form asp-action="Delete" class='form_footer'>
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="מחק" class="btn btn-default button" />
+            <a asp-action="Index">בחזרה לרשימת הסניפים</a>
+        </form>
+    </div>
 </div>

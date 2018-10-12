@@ -1,27 +1,29 @@
 ﻿@model GRD.Models.Product
 
-<h2>@ViewData["Title"]</h2>
+<div class='page_title_container'>
+    <h2 class='page_title'>מחיקת מוצר</h2>
+</div>
 
-<h3>האם אתה בטוח שברצונך למחוק מוצר זה?</h3>
-<div>
-    <h4>מוצר</h4>
-    <hr />
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Price):</label>
-        @Html.DisplayFor(model => model.Price)
+<div class='delete_form_container'>
+    <h3>האם אתה בטוח שברצונך למחוק מוצר זה?</h3>
+    <div class='create_edit_form'>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Price):</label>
+            @Html.DisplayFor(model => model.Price)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Name):</label>
+            @Html.DisplayFor(model => model.Name)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Size):</label>
+            @Html.DisplayFor(model => model.Size)
+        </div>
+        <br />
+        <form asp-action="Delete" class='form_footer'>
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="מחק" class="btn btn-default button" />
+            <a asp-action="Index">בחזרה לרשימה המלאה</a>
+        </form>
     </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Name):</label>
-        @Html.DisplayFor(model => model.Name)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Size):</label>
-        @Html.DisplayFor(model => model.Size)
-    </div>
-    <br />
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="מחק" class="btn btn-default" /> |
-        <a asp-action="Index">בחזרה לרשימה המלאה</a>
-    </form>
 </div>

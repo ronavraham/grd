@@ -4,81 +4,86 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>מסך משתמשים</h2>
+<div class='page_title_container'>
+    <h2 class='page_title'>מסך משתמשים</h2>
+</div>
 
-<p>
-    <a asp-action="Create">צור חדש</a>
-</p>
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            חפש לפי: 
-            <select name="FilterType" class="index-search-select">
-                <option selected="@((string)ViewData["filterType"] == "שם משתמש")">שם משתמש</option>
-                <option selected="@((string)ViewData["filterType"] == "סיסמא")">סיסמא</option>
-                <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
-            </select>
-            <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button"/> |
-            <a asp-action="Index">בחזרה לרשימה מלאה</a>
-        </p>
-    </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th class="index-table-th">
-                @Html.DisplayNameFor(model => model.IsAdmin)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class='page_plus_button branches_index_plus_button'>
+    <a class='page_plus_text' asp-action="Create">+</a>
+</div>
+
+<div class='page_content_container'>
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                חפש לפי:
+                <select name="FilterType" class="index-search-select">
+                    <option selected="@((string)ViewData["filterType"] == "שם משתמש")">שם משתמש</option>
+                    <option selected="@((string)ViewData["filterType"] == "סיסמא")">סיסמא</option>
+                    <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
+                </select>
+                <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button" /> |
+                <a asp-action="Index">בחזרה לרשימה מלאה</a>
+            </p>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @{
-                        if (item.Gender == false)
-                        { <text>זכר</text> }
-                    else
-                    { <text>נקבה</text> }
-                    }
-                </td>
-                <td>
-                    @{
-                        if (item.IsAdmin == false)
-                        { <text>לא</text> }
-                    else
-                    { <text>כן</text> }
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-                </td>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Password)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.IsAdmin)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Gender == false)
+                            { <text>זכר</text> }
+                        else
+                        { <text>נקבה</text> }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.IsAdmin == false)
+                            { <text>לא</text> }
+                        else
+                        { <text>כן</text> }
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

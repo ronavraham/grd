@@ -23,7 +23,7 @@
     </environment>
 </head>
 <body dir="rtl">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar-inverse navbar-fixed-top navbar_override">
         <div class="container">
             <div class="navbar-header" style="float:right">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -47,13 +47,11 @@
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    <div class="body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - GRD</p>
-        </footer>
+
     </div>
+    <footer class='footer'></footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
