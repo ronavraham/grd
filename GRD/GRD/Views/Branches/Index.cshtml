@@ -8,26 +8,35 @@
     <h2 class='page_title'>מסך סניפים</h2>
 </div>
 
-<div class='page_plus_button branches_index_plus_button'>
-    <a class='page_plus_text' asp-action="Create">+</a>
-</div>
+@{
+    var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+    if (isAdmin)
+    {
+        <div class='page_plus_button branches_index_plus_button'>
+            <a class='page_plus_text' asp-action="Create">+</a>
+        </div>
+    }
+}
+
+
 
 <div class='page_content_container branches_content_container'>
     <div class="branches_map_table_container">
         <div class='branches_form_table_container'>
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
-                    <p>
-                        חפש לפי:
-                        <select name="FilterType" class="index-search-select">
-                            <option selected="@((string)ViewData["filterType"] == "שם")">שם</option>
-                            <option selected="@((string)ViewData["filterType"] == "עיר")">עיר</option>
-                            <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
-                        </select>
-                        <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-                        <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button" /> |
+                    <div class='advanced_search_fields'>
+                        <div>@Html.DisplayNameFor(model => model.Name)</div>
+                        <input type="text" name="Name" class="form-control advanced_search_field" value=@ViewData["BranchesNameQuery"] />
+                        <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.City)</div>
+                        <input type="text" name="City" class="form-control advanced_search_field" value=@ViewData["BranchesCityQuery"] />
+                        <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.Address)</div>
+                        <input type="text" name="Address" class="form-control advanced_search_field" value=@ViewData["BranchesAddressQuery"] />
+                    </div>
+                    <div class='advanced_search_submit'>
+                        <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default button" />
                         <a asp-action="Index">בחזרה לרשימה מלאה</a>
-                    </p>
+                    </div>
                 </div>
             </form>
             <table class="table branches_table">
@@ -77,7 +86,7 @@
                             </td>
                             <td>
                                 @{
-                                    var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+                                    //var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
                                     if (isAdmin)
                                     {
                                         <div>

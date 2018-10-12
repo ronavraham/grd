@@ -19,26 +19,29 @@ namespace GRD.Controllers
         }
 
         // GET: Branches
-        public async Task<IActionResult> Index(string searchString, string filterType)
+        public async Task<IActionResult> Index(string Name, string City, string Address)
         {
-            ViewData["CurrentFilter"] = searchString;
-            ViewData["FilterType"] = filterType;
+            ViewData["BranchesNameQuery"] = Name;
+            ViewData["BranchesCityQuery"] = City;
+            ViewData["BranchesAddressQuery"] = Address;
+
             var branches = _context.Branches.Select(x => x);
-            if (!String.IsNullOrEmpty(searchString))
+
+            if (!String.IsNullOrEmpty(Name))
             {
-                switch (filterType)
-                {
-                    case "שם":
-                        branches = branches.Where(x => x.Name.Contains(searchString));
-                        break;
-                    case "עיר":
-                        branches = branches.Where(x => x.City.Contains(searchString));
-                        break;
-                    case "כתובת":
-                        branches = branches.Where(x => x.Address.Contains(searchString));
-                        break;
-                }
+                branches = branches.Where(x => x.Name.Contains(Name));
             }
+
+            if (!String.IsNullOrEmpty(City))
+            {
+                branches = branches.Where(x => x.City.Contains(City));
+            }
+
+            if (!String.IsNullOrEmpty(Address))
+            {
+                branches = branches.Where(x => x.Address.Contains(Address));
+            }
+
             return View(await branches.AsNoTracking().ToListAsync());
         }
 

@@ -78,6 +78,7 @@
     align-items: center;
     margin-top: -32px;
     margin-right: 32px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .page_plus_text {
@@ -99,7 +100,7 @@
     padding: 16px;
     margin-right: 128px;
     margin-left: 128px;
-    margin-top: -72px;
+    margin-top: -64px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     background: white;
 }
@@ -121,3 +122,19 @@
     height: 24px;
 }
 
+.advanced_search_fields {
+    display: flex;
+    align-items: center;
+}
+
+.advanced_search_submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.advanced_search_field {
+    margin-right: 8px;
+}
