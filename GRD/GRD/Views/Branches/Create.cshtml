@@ -48,16 +48,14 @@
                 </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group form_footer">
             <input type="submit" value="צור" class="btn btn-default button" />
+            <a asp-action="Index">בחזרה לרשמית סניפים</a>
         </div>
     </form>
 </div>
 
-
-<div>
-    <a asp-action="Index">בחזרה לרשמית סניפים</a>
-</div>
+</br>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -26,6 +26,11 @@
     min-width: 360px;
 }
 
+.form_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .update-form-container {
     float: right;
 }
