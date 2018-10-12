@@ -39,7 +39,7 @@ namespace GRD
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
             services.AddSession();
 
-            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=RonLocal;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=GolanLocal;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<ProjectContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
