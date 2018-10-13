@@ -51,7 +51,7 @@ namespace GRD.Controllers
             {
                 searchQuery = searchQuery.Where(s => s.Size.Equals(Size));
             }
-            return View("Index", await searchQuery.AsNoTracking().ToListAsync());
+            return View("Index", await searchQuery.ToListAsync());
         }
 
         // GET: Products/Details/5
