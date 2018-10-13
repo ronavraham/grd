@@ -4,40 +4,43 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>מחק משתמש</h2>
+<div class='page_title_container'>
+    <h2 class='page_title'>מחיקת משתמש</h2>
+</div>
 
-<h3>אתה בטוח שברצונך למחוק משתמש זה?</h3>
-<div>
-    <hr />
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Username):</label>
-        @Html.DisplayFor(model => model.Username)
+<div class='delete_form_container'>
+    <h3>אתה בטוח שברצונך למחוק משתמש זה?</h3>
+    <div class='create_edit_form'>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Username):</label>
+            @Html.DisplayFor(model => model.Username)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Password):</label>
+            @Html.DisplayFor(model => model.Password)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Address):</label>
+            @Html.DisplayFor(model => model.Address)
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.Gender):</label>
+            @{
+                if (Model.Gender == false)
+                { <text>זכר</text> }
+            else
+            { <text>נקבה</text> }
+            }
+        </div>
+        <div>
+            <label class="delete-label">@Html.DisplayNameFor(model => model.IsAdmin):</label>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </div>
+        <br />
+        <form asp-action="Delete" class='form_footer'>
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="מחק" class="btn btn-default button" />
+            <a asp-action="Index">בחזרה לרשימת המשתמשים</a>
+        </form>
     </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Password):</label>
-        @Html.DisplayFor(model => model.Password)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Address):</label>
-        @Html.DisplayFor(model => model.Address)
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.Gender):</label>
-        @{
-            if (Model.Gender == false)
-            { <text>זכר</text> }
-        else
-        { <text>נקבה</text> }
-        }
-    </div>
-    <div>
-        <label class="delete-label">@Html.DisplayNameFor(model => model.IsAdmin):</label>
-        @Html.DisplayFor(model => model.IsAdmin)
-    </div>
-    <br />
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="מחק" class="btn btn-default" /> |
-        <a asp-action="Index">בחזרה לרשימת המשתמשים</a>
-    </form>
 </div>

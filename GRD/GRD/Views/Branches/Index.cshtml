@@ -4,92 +4,108 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>מסך סניפים</h2>
-
-<p>
-    <a asp-action="Create">צור חדש</a>
-</p>
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            חפש לפי:
-            <select name="FilterType" class="index-search-select">
-                <option selected="@((string)ViewData["filterType"] == "שם")">שם</option>
-                <option selected="@((string)ViewData["filterType"] == "עיר")">עיר</option>
-                <option selected="@((string)ViewData["filterType"] == "כתובת")">כתובת</option>
-            </select>
-            <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default index-submit-button" /> |
-            <a asp-action="Index">בחזרה לרשימה מלאה</a>
-        </p>
-    </div>
-</form>
-<div class="branches_map_table_container">
-    <table class="table branches_table">
-        <thead>
-            <tr>
-                <th class="index-table-th">
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th class="index-table-th">
-                    @Html.DisplayNameFor(model => model.City)
-                </th>
-                <th class="index-table-th">
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th class="index-table-th">
-                    @Html.DisplayNameFor(model => model.Telephone)
-                </th>
-                <th class="index-table-th">
-                    @Html.DisplayNameFor(model => model.IsSaturday)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telephone)
-                    </td>
-                    <td>
-                        @{
-                            if (item.IsSaturday)
-                            { <text>כן</text> }
-                        else
-                        { <text>לא</text> }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
-                            if (isAdmin)
-                            {
-                                <div>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-                                </div>
-                            }
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div id="branches_index_map" class="branches_index_map"></div>
+<div class='page_title_container'>
+    <h2 class='page_title'>מסך סניפים</h2>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHAZzg-GFQtdb922AM04UgHnFcEcZs_dg&callback=initMap&language=iw&region=IL"
-        async defer asp-append-version="true"></script>
+
+@{
+    var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+    if (isAdmin)
+    {
+        <div class='page_plus_button branches_index_plus_button'>
+            <a class='page_plus_text' asp-action="Create">+</a>
+        </div>
+    }
+}
+
+
+
+<div class='page_content_container branches_content_container'>
+    <div class="branches_map_table_container">
+        <div class='branches_form_table_container'>
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color">
+                    <div class='advanced_search_fields'>
+                        <div>@Html.DisplayNameFor(model => model.Name)</div>
+                        <input type="text" name="Name" class="form-control advanced_search_field" value=@ViewData["BranchesNameQuery"] />
+                        <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.City)</div>
+                        <input type="text" name="City" class="form-control advanced_search_field" value=@ViewData["BranchesCityQuery"] />
+                        <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.Address)</div>
+                        <input type="text" name="Address" class="form-control advanced_search_field" value=@ViewData["BranchesAddressQuery"] />
+                    </div>
+                    <div class='advanced_search_submit'>
+                        <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default button" />
+                        <a asp-action="Index">בחזרה לרשימה מלאה</a>
+                    </div>
+                </div>
+            </form>
+            <table class="table branches_table">
+                <thead>
+                    <tr>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.Telephone)
+                        </th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.IsSaturday)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telephone)
+                            </td>
+                            <td>
+                                @{
+                                    if (item.IsSaturday)
+                                    { <text>כן</text> }
+                                else
+                                { <text>לא</text> }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    //var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+                                    if (isAdmin)
+                                    {
+                                        <div>
+                                            <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                                        </div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="branches_index_map" class="branches_index_map"></div>
+    </div>
+</div>
+
+
 <script>
     var map;
     function initMap() {
@@ -137,3 +153,5 @@
        '</div>'
     }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHAZzg-GFQtdb922AM04UgHnFcEcZs_dg&callback=initMap&language=iw&region=IL"
+        async defer asp-append-version="true"></script>
