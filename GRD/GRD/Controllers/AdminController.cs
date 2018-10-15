@@ -21,28 +21,8 @@ namespace GRD.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "דף מנהל";
             return View();
-        }
-
-        [HttpGet]
-        public JsonResult AjaxGetCall(float lat, float lng)
-        {
-            var coord = new GeoCoordinate(lat, lng);
-            var branches = _context.Branches.Select(x => new Branch
-            {
-                Id = x.Id,
-                Lat = x.Lat,
-                Long = x.Long,
-                IsSaturday = x.IsSaturday,
-                Address = x.Address,
-                City = x.City,
-                Name = x.Name,
-                Telephone = x.Telephone
-            }).ToList();
-
-            var nearestBranch = branches.OrderBy(x => new GeoCoordinate(x.Lat, x.Long).GetDistanceTo(coord))
-                                   .First();
-            return Json(nearestBranch);
         }
 
         [HttpGet]
