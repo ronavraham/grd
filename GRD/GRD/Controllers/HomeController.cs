@@ -5,24 +5,11 @@ using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using GRD.Data;
 using GRD.Models;
+using GRD.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GRD.Controllers
 {
-    public class BranchSalesView
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Count { get; set; }
-    }
-
-    public class ProductSalesView
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Count { get; set; }
-    }
-
     public class HomeController : Controller
     {
         private readonly ProjectContext _context;
