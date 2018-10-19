@@ -173,6 +173,7 @@ namespace GRD.Controllers
             }
             HttpContext.Session.SetString("isAdmin", user.IsAdmin ? "true" : "false");
             HttpContext.Session.SetString("username", user.Username);
+            HttpContext.Session.SetString("isLogin", "true");
 
             if (user.IsAdmin)
             {
