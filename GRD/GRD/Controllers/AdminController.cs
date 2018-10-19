@@ -28,53 +28,47 @@ namespace GRD.Controllers
         [HttpGet]
         public JsonResult BranchSales()
         {
-            var sales = new List<BranchSalesView>();
-            int count = 0;
-            var result = _context.Branches.Select(x => x).ToList();
-            foreach (Branch b in result)
+            var result = _context.Purchases.Join(_context.Branches,
+                (purchase => purchase.Branch.Id),
+                (branch => branch.Id),
+                (p, b) => new
+                {
+                    branchId = b.Id,
+                    branchName = b.Name,
+                    count = p.Count
+                })
+            .GroupBy(b => b.branchId)
+            .Select(p => new
             {
-                count = 0;
-                if (b.Purchases.Count != 0)
-                {
-                    foreach (Purchase p in b.Purchases)
-                    {
-                        count += p.Count;
-                    }
-                }
-                sales.Add(new BranchSalesView
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Count = count
-                });
-            }
-            return Json(sales);
+                Count = p.Sum(pur => pur.count),
+                Name = p.First(pur => pur.branchId == p.Key).branchName,
+                Id = p.Key
+            });
+
+            return Json(result);
         }
 
         [HttpGet]
         public JsonResult ProductSales()
         {
-            var sales = new List<BranchSalesView>();
-            int count = 0;
-            var result = _context.Products.Select(x => x).ToList();
-            foreach (Product pro in result)
+            var result = _context.Purchases.Join(_context.Products,
+                (purchase => purchase.Product.Id),
+                (product => product.Id),
+                (pur, pro) => new
+                {
+                    productId = pro.Id,
+                    productName = pro.Name,
+                    count = pur.Count
+                })
+            .GroupBy(b => b.productId)
+            .Select(p => new
             {
-                count = 0;
-                if (pro.Purchases.Count != 0)
-                {
-                    foreach (Purchase pur in pro.Purchases)
-                    {
-                        count += pur.Count;
-                    }
-                }
-                sales.Add(new BranchSalesView
-                {
-                    Id = pro.Id,
-                    Name = pro.Name,
-                    Count = count
-                });
-            }
-            return Json(sales);
+                Count = p.Sum(pur => pur.count),
+                Name = p.First(pur => pur.productId == p.Key).productName,
+                Id = p.Key
+            });
+
+            return Json(result);
         }
     }
 }
