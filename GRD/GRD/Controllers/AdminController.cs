@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using GRD.Data;
 using GRD.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GRD.Controllers
@@ -20,6 +21,10 @@ namespace GRD.Controllers
 
         public IActionResult Index()
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             ViewData["Title"] = "דף מנהל";
             return View();
         }
@@ -27,6 +32,12 @@ namespace GRD.Controllers
         [HttpGet]
         public JsonResult BranchSales()
         {
+            if (!IsAuthorized())
+            {
+                var res = Json("you are not autorized for this request");
+                res.StatusCode = 401;
+                return res;
+            }
             var result = _context.Purchases.Join(_context.Branches,
                 (purchase => purchase.Branch.Id),
                 (branch => branch.Id),
@@ -50,6 +61,12 @@ namespace GRD.Controllers
         [HttpGet]
         public JsonResult ProductSales()
         {
+            if (!IsAuthorized())
+            {
+                var res = Json("you are not autorized for this request");
+                res.StatusCode = 401;
+                return res;
+            }
             var result = _context.Purchases.Join(_context.Products,
                 (purchase => purchase.Product.Id),
                 (product => product.Id),
@@ -68,6 +85,12 @@ namespace GRD.Controllers
             });
 
             return Json(result);
+        }
+
+        private bool IsAuthorized()
+        {
+            return (HttpContext.Session.GetString("isAdmin") == "true" ? true : false) &&
+                (HttpContext.Session.GetString("isLogin") == "true" ? true : false);
         }
     }
 }
