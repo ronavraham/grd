@@ -23,6 +23,10 @@ namespace GRD.Controllers
         // GET: Users
         public async Task<IActionResult> Index(string searchString, string filterType)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             ViewData["CurrentFilter"] = searchString;
             ViewData["FilterType"] = filterType;
             var isAdmin = HttpContext.Session.GetString("isAdmin") == "true" ? true : false;
@@ -52,6 +56,11 @@ namespace GRD.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -70,6 +79,10 @@ namespace GRD.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
@@ -80,6 +93,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Password,Address,Id,Gender,IsAdmin")] User user)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(user);
@@ -92,6 +109,10 @@ namespace GRD.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -112,6 +133,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Username,Password,Address,Id,Gender,IsAdmin")] User user)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id != user.Id)
             {
                 return NotFound();
@@ -143,6 +168,10 @@ namespace GRD.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -197,6 +226,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             var user = await _context.Users.FindAsync(id);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
@@ -206,6 +239,12 @@ namespace GRD.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        private bool IsAuthorized()
+        {
+            return (HttpContext.Session.GetString("isAdmin") == "true" ? true : false) &&
+                (HttpContext.Session.GetString("isLogin") == "true" ? true : false);
         }
     }
 }
