@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="DisplayTemplates\" />
     <Folder Include="docs\images\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

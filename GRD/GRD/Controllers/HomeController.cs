@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using GRD.Data;
 using GRD.Models;
-using GRD.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GRD.Controllers
@@ -43,58 +42,6 @@ namespace GRD.Controllers
             var nearestBranch = branches.OrderBy(x => new GeoCoordinate(x.Lat, x.Long).GetDistanceTo(coord))
                                    .First();
             return Json(nearestBranch);
-        }
-
-        [HttpGet]
-        public JsonResult BranchSales()
-        {
-            var sales = new List<BranchSalesView>();
-            int count = 0;
-            var result = _context.Branches.Select(x => x).ToList();
-            foreach (Branch b in result)
-            {
-                count = 0;
-                if (b.Purchases.Count != 0)
-                {
-                    foreach(Purchase p in b.Purchases)
-                    {
-                        count += p.Count;
-                    }
-                }
-                sales.Add(new BranchSalesView
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Count = count
-                });
-            }
-            return Json(sales);
-        }
-
-        [HttpGet]
-        public JsonResult ProductSales()
-        {
-            var sales = new List<BranchSalesView>();
-            int count = 0;
-            var result = _context.Products.Select(x => x).ToList();
-            foreach (Product pro in result)
-            {
-                count = 0;
-                if (pro.Purchases.Count != 0)
-                {
-                    foreach (Purchase pur in pro.Purchases)
-                    {
-                        count += pur.Count;
-                    }
-                }
-                sales.Add(new BranchSalesView
-                {
-                    Id = pro.Id,
-                    Name = pro.Name,
-                    Count = count
-                });
-            }
-            return Json(sales);
         }
     }
 }
