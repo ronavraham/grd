@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GRD.Data;
 using GRD.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,6 +67,10 @@ namespace GRD.Controllers
         // GET: Branches/Create
         public IActionResult Create()
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
@@ -76,6 +81,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Lat,Long,Name,City,Address,Telephone,IsSaturday,Id")] Branch branch)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(branch);
@@ -88,6 +97,10 @@ namespace GRD.Controllers
         // GET: Branches/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -108,6 +121,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Lat,Long,Name,City,Address,Telephone,IsSaturday,Id")] Branch branch)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id != branch.Id)
             {
                 return NotFound();
@@ -139,6 +156,10 @@ namespace GRD.Controllers
         // GET: Branches/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -159,6 +180,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             var branch = await _context.Branches.FindAsync(id);
             _context.Branches.Remove(branch);
             await _context.SaveChangesAsync();
@@ -168,6 +193,12 @@ namespace GRD.Controllers
         private bool BranchExists(int id)
         {
             return _context.Branches.Any(e => e.Id == id);
+        }
+
+        private bool IsAuthorized()
+        {
+            return (HttpContext.Session.GetString("isAdmin") == "true" ? true : false) &&
+                (HttpContext.Session.GetString("isLogin") == "true" ? true : false);
         }
     }
 }
