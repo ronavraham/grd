@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GRD.Data;
 using GRD.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GRD.Controllers
 {
@@ -25,27 +26,13 @@ namespace GRD.Controllers
             return View(await _context.Suppliers.ToListAsync());
         }
 
-        // GET: Suppliers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (supplier == null)
-            {
-                return NotFound();
-            }
-
-            return View(supplier);
-        }
-
         // GET: Suppliers/Create
         public IActionResult Create()
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
@@ -56,6 +43,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Supplier supplier)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(supplier);
@@ -68,6 +59,10 @@ namespace GRD.Controllers
         // GET: Suppliers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +83,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Supplier supplier)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id != supplier.Id)
             {
                 return NotFound();
@@ -119,6 +118,10 @@ namespace GRD.Controllers
         // GET: Suppliers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +142,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             var supplier = await _context.Suppliers.FindAsync(id);
             _context.Suppliers.Remove(supplier);
             await _context.SaveChangesAsync();
@@ -148,6 +155,12 @@ namespace GRD.Controllers
         private bool SupplierExists(int id)
         {
             return _context.Suppliers.Any(e => e.Id == id);
+        }
+
+        private bool IsAuthorized()
+        {
+            return (HttpContext.Session.GetString("isAdmin") == "true" ? true : false) &&
+                (HttpContext.Session.GetString("isLogin") == "true" ? true : false);
         }
     }
 }

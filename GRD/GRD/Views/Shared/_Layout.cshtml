@@ -1,5 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http;
 
+@{
+    var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+    var userName = Context.Session.GetString("username");
+    var isLogin = Context.Session.GetString("isLogin") == "true" ? true : false;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,14 +40,43 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GRD</a>
             </div>
             <div class="navbar-collapse collapse" style="float:right">
+
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">מסך הבית</a></li>
+                    @{
+                        if (isAdmin)
+                        {
+                            <li><a asp-area="" asp-controller="Users" asp-action="Index">משתמשים</a></li>
+                            <li><a asp-area="" asp-controller="Admin" asp-action="Index">ניהול</a></li>
+                        }
+                    }
                     <li><a asp-area="" asp-controller="Suppliers" asp-action="Index">ספקים</a></li>
                     <li><a asp-area="" asp-controller="Products" asp-action="Index">מוצרים</a></li>
                     <li><a asp-area="" asp-controller="Branches" asp-action="Index">סניפים</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">משתמשים</a></li>
                 </ul>
-</div>
+
+            </div>
+            <div class="navbar-collapse collapse" style="float:left">
+                @{
+                    if (isLogin)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="" asp-controller="Users" asp-action="Logout">התנתק</a></li>
+                        </ul>
+                        <span class="navbar-text">
+                            @("שלום, " + userName)
+                        </span>
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="" asp-controller="Users" asp-action="Login">התחבר</a></li>
+                        </ul>
+                        <span class="navbar-text">
+                            @("שלום, אורח")
+                        </span>
+                    }
+                }
+            </div>
         </div>
     </nav>
 

@@ -54,28 +54,13 @@ namespace GRD.Controllers
             return View("Index", await searchQuery.ToListAsync());
         }
 
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            ViewData["Title"] = "פירוט";
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
         // GET: Products/Create
         public IActionResult Create()
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             ViewData["Title"] = "יצירת מוצר חדש";
             PopulateSuppliersDropDownList();
             return View();
@@ -88,6 +73,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierForeignKey")] Product product)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             // get the image name and save the path to the saved pictures
             var filePath = _staticImagesRoute + file.FileName;
 
@@ -123,6 +112,10 @@ namespace GRD.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             ViewData["Title"] = "עריכת מוצר קיים";
             if (id == null)
             {
@@ -145,6 +138,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierForeignKey")] Product product, IFormFile file)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             if (id != product.Id)
             {
                 return NotFound();
@@ -207,6 +204,10 @@ namespace GRD.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             ViewData["Title"] = "מחיקת מוצר";
             if (id == null)
             {
@@ -228,6 +229,10 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
             var product = await _context.Products.FindAsync(id);
             // delete the product image from fs
             FileInfo deleteFile = new FileInfo(_staticImagesRoute + product.PictureName);
@@ -240,6 +245,12 @@ namespace GRD.Controllers
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
+        }
+
+        private bool IsAuthorized()
+        {
+            return (HttpContext.Session.GetString("isAdmin") == "true" ? true : false) &&
+                (HttpContext.Session.GetString("isLogin") == "true" ? true : false);
         }
     }
 }
