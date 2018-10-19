@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
 
-@{ 
+@{
     var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
     var userName = Context.Session.GetString("username");
     var isLogin = Context.Session.GetString("isLogin") == "true" ? true : false;
@@ -55,18 +55,28 @@
                 </ul>
 
             </div>
-            <span class="navbar-text" style="float:left">
-                @{ 
+            <div class="navbar-collapse collapse" style="float:left">
+                @{
                     if (isLogin)
                     {
-                        @("שלום, " + userName);
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="" asp-controller="Users" asp-action="Logout">התנתק</a></li>
+                        </ul>
+                        <span class="navbar-text">
+                            @("שלום, " + userName)
+                        </span>
                     }
                     else
                     {
-                        @("שלום, אורח");
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="" asp-controller="Users" asp-action="Login">התחבר</a></li>
+                        </ul>
+                        <span class="navbar-text">
+                            @("שלום, אורח")
+                        </span>
                     }
                 }
-            </span>
+            </div>
         </div>
     </nav>
 
