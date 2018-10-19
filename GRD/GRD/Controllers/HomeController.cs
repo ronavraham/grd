@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using GRD.Data;
+using GRD.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GRD.Controllers
@@ -26,7 +27,17 @@ namespace GRD.Controllers
         public JsonResult AjaxGetCall(float lat, float lng)
         {
             var coord = new GeoCoordinate(lat, lng);
-            var branches = _context.Branches.Select(x => x).ToList();
+            var branches = _context.Branches.Select(x => new Branch
+            {
+                Id=x.Id,
+                Lat=x.Lat,
+                Long=x.Long,
+                IsSaturday=x.IsSaturday,
+                Address=x.Address,
+                City=x.City,
+                Name=x.Name,
+                Telephone=x.Telephone
+            }).ToList();
 
             var nearestBranch = branches.OrderBy(x => new GeoCoordinate(x.Lat, x.Long).GetDistanceTo(coord))
                                    .First();
