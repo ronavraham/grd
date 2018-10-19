@@ -182,6 +182,16 @@ namespace GRD.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetString("isAdmin", "false");
+            HttpContext.Session.SetString("username", "");
+            HttpContext.Session.SetString("isLogin", "false");
+
+            return RedirectToAction("Index", "Home", null);
+        }
+
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
