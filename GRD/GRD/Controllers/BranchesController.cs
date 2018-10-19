@@ -46,24 +46,6 @@ namespace GRD.Controllers
             return View(await branches.AsNoTracking().ToListAsync());
         }
 
-        // GET: Branches/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var branch = await _context.Branches
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (branch == null)
-            {
-                return NotFound();
-            }
-
-            return View(branch);
-        }
-
         // GET: Branches/Create
         public IActionResult Create()
         {
