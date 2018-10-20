@@ -31,6 +31,61 @@ namespace GRD.Controllers
             return View(await _context.Products.ToListAsync());
         }
 
+        public async Task<IActionResult> PurchaseProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            Purchase p = new Purchase
+            {
+                UserId = int.Parse(HttpContext.Session.GetString("userid")),
+                Count = 0,
+                BranchId = null,
+                PurchaseDate = DateTime.Now,
+                ProductId = id,
+                Product = product
+            };
+            PopulateBranchesDropDownList();
+            return View(p);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PurchaseProduct([Bind("Count,PurchaseDate,ProductId,id,BranchId, UserId")] Purchase purchase)
+        {
+            if (!IsAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            // case the user put new image to update
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Add(purchase);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(purchase.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            PopulateBranchesDropDownList(purchase.BranchId);
+            return View(@"Views\Products\Index.cshtml");
+        }
+
         // GET: Products by query
         public async Task<IActionResult> Search(int Price, string Name, int Size)
         {
@@ -199,6 +254,14 @@ namespace GRD.Controllers
                                    orderby d.Name
                                    select d;
             ViewBag.SupplierForeignKey = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
+        }
+
+        private void PopulateBranchesDropDownList(object selectedBranch = null)
+        {
+            var branchesQuery = from d in _context.Branches
+                                 orderby d.Name
+                                 select d;
+            ViewBag.BranchId = new SelectList(branchesQuery, "Id", "Name", selectedBranch);
         }
 
         // GET: Products/Delete/5
