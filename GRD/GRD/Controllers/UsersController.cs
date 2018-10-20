@@ -179,6 +179,7 @@ namespace GRD.Controllers
             }
             HttpContext.Session.SetString("isAdmin", user.IsAdmin ? "true" : "false");
             HttpContext.Session.SetString("username", user.Username);
+            HttpContext.Session.SetString("userid", user.Id.ToString());
             HttpContext.Session.SetString("isLogin", "true");
 
             if (user.IsAdmin)
@@ -193,6 +194,7 @@ namespace GRD.Controllers
         {
             HttpContext.Session.SetString("isAdmin", "false");
             HttpContext.Session.SetString("username", "");
+            HttpContext.Session.SetString("userid", "-1");
             HttpContext.Session.SetString("isLogin", "false");
 
             return RedirectToAction("Index", "Home", null);
