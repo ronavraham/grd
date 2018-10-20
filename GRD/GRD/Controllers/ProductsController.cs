@@ -133,7 +133,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId,ProductTypeId")] Product product)
         {
             if (!IsAuthorized())
             {
@@ -200,7 +200,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId")] Product product, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId,ProductTypeId")] Product product, IFormFile file)
         {
             if (!IsAuthorized())
             {
@@ -279,7 +279,7 @@ namespace GRD.Controllers
             var ProductTypeQuery = from d in _context.ProductTypes
                                  orderby d.Name
                                  select d;
-            ViewBag.ProductTypeForeignKey = new SelectList(ProductTypeQuery, "Id", "Name", selectedProductType);
+            ViewBag.ProductTypeId = new SelectList(ProductTypeQuery, "Id", "Name", selectedProductType);
         }
 
         // GET: Products/Delete/5
