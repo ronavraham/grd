@@ -65,6 +65,12 @@ namespace GRD.Controllers
             {
                 try
                 {
+                    if( !_context.Products.Any(val=>val.Id == purchase.ProductId) ||
+                        !_context.Branches.Any(val => val.Id == purchase.BranchId) ||
+                        !_context.Users.Any(val => val.Id == purchase.UserId))
+                    {
+                        return NotFound();
+                    }
                     _context.Add(purchase);
                     await _context.SaveChangesAsync();
 
@@ -126,7 +132,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierForeignKey")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId")] Product product)
         {
             if (!IsAuthorized())
             {
@@ -191,7 +197,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierForeignKey")] Product product, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId")] Product product, IFormFile file)
         {
             if (!IsAuthorized())
             {
@@ -253,7 +259,7 @@ namespace GRD.Controllers
             var suppliersQuery = from d in _context.Suppliers
                                    orderby d.Name
                                    select d;
-            ViewBag.SupplierForeignKey = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
+            ViewBag.SupplierId = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
         }
 
         private void PopulateBranchesDropDownList(object selectedBranch = null)

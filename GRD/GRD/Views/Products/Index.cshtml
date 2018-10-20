@@ -73,7 +73,7 @@
                     <img style="height: 10vh;width: 6vw;"
                          src=@System.String.Format("/images/products/{0}",item.PictureName) />
                 </td>
-                <td style="vertical-align:middle">
+                <td>
                     @{
                         if (Context.Session.GetString("isLogin") == "true")
                         {
@@ -81,7 +81,7 @@
                         }
                     }
                 </td>
-                <td>
+                <td >
                     @{
                         if (isAdmin)
                         {
