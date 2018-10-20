@@ -25,5 +25,9 @@ namespace GRD.Models
 
         public int? SupplierId { get; set; }
         public virtual Supplier Supplier { get; set; }
+
+        public int? ProductTypeId { get; set; }
+        [Display(Name = "סוג")]
+        public virtual ProductType ProductType { get; set; }
     }
 }
