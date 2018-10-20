@@ -74,11 +74,16 @@
                          src=@System.String.Format("/images/products/{0}",item.PictureName) />
                 </td>
                 <td>
-                    <a asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
+                    @{
+                        if (isAdmin)
+                        {
+                            <a asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
+                        }
+                    }
                 </td>
                 <td>
                     @{
-                        if (isAdmin)
+                        if (Context.Session.GetString("userid") != "0")
                         {
                             <div>
                                 <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
