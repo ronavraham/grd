@@ -140,6 +140,11 @@ namespace GRD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var supplier = await _context.Suppliers.FindAsync(id);
+            if (supplier == null)
+            {
+                return View("Views/Suppliers/NotFound.cshtml");
+            }
+            supplier.Products.ToList().ForEach(p => { p.Purchases.ToList().ForEach(pu=>p.Purchases.Remove(pu)); supplier.Products.Remove(p); });
             _context.Suppliers.Remove(supplier);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

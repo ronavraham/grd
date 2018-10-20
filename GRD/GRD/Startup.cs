@@ -36,7 +36,7 @@ namespace GRD
                 options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
+            services.AddMvc(o => o.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(val => "חובה להזין מספר")).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
             services.AddSession();
 
             var connection = @"Server=tcp:webproject2018.database.windows.net,1433;Initial Catalog=WebProject2018;Persist Security Info=False;

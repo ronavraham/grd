@@ -187,6 +187,11 @@ namespace GRD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return View("Views/Users/NotFound.cshtml");
+            }
+            user.Purchases.ToList().ForEach(p => user.Purchases.Remove(p));
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

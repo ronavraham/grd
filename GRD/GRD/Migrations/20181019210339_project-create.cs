@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GRD.Migrations
 {
-    public partial class Projectcreate : Migration
+    public partial class projectcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,14 +67,14 @@ namespace GRD.Migrations
                     Price = table.Column<double>(nullable: false),
                     Size = table.Column<int>(nullable: false),
                     PictureName = table.Column<string>(nullable: true),
-                    SupplierForeignKey = table.Column<int>(nullable: false)
+                    SupplierId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Suppliers_SupplierForeignKey",
-                        column: x => x.SupplierForeignKey,
+                        name: "FK_Products_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -116,9 +116,9 @@ namespace GRD.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SupplierForeignKey",
+                name: "IX_Products_SupplierId",
                 table: "Products",
-                column: "SupplierForeignKey");
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_BranchId",
