@@ -15,7 +15,7 @@ namespace GRD.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -58,11 +58,11 @@ namespace GRD.Migrations
 
                     b.Property<int>("Size");
 
-                    b.Property<int>("SupplierForeignKey");
+                    b.Property<int?>("SupplierId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SupplierForeignKey");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -132,7 +132,7 @@ namespace GRD.Migrations
                 {
                     b.HasOne("GRD.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("SupplierForeignKey")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

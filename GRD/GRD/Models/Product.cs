@@ -13,17 +13,17 @@ namespace GRD.Models
         [Display(Name = "שם")]
         public string Name { get; set; }
         [Display(Name = "מחיר")]
+        [Range(0, double.MaxValue)]
         public double Price { get; set; }
         [Display(Name = "גודל")]
+        [Range(1, 3)]
         public int Size { get; set; }
         [Display(Name = "תמונה")]
         public string PictureName { get; set; }
         // add for relations with Purchases
         public virtual List<Purchase> Purchases { get; set; }
 
-        public int SupplierForeignKey { get; set; }
-
-        [ForeignKey("SupplierForeignKey")]
+        public int? SupplierId { get; set; }
         public virtual Supplier Supplier { get; set; }
     }
 }

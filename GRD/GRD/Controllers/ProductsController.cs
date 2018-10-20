@@ -104,7 +104,7 @@ namespace GRD.Controllers
                 //Log the error (uncomment dex variable name and add a line here to write a log.)
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
-            PopulateSuppliersDropDownList(product.SupplierForeignKey);
+            PopulateSuppliersDropDownList(product.SupplierId);
 
             return View(product);
         }
@@ -127,7 +127,7 @@ namespace GRD.Controllers
             {
                 return NotFound();
             }
-            PopulateSuppliersDropDownList(product.SupplierForeignKey);
+            PopulateSuppliersDropDownList(product.SupplierId);
             return View(product);
         }
 
@@ -189,7 +189,7 @@ namespace GRD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateSuppliersDropDownList(product.SupplierForeignKey);
+            PopulateSuppliersDropDownList(product.SupplierId);
             return View(product);
         }
 
@@ -234,6 +234,11 @@ namespace GRD.Controllers
                 return Unauthorized();
             }
             var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return View("Views/Products/NotFound.cshtml");
+            }
+            product.Purchases.ToList().ForEach(p => product.Purchases.Remove(p));
             // delete the product image from fs
             FileInfo deleteFile = new FileInfo(_staticImagesRoute + product.PictureName);
             deleteFile.Delete();

@@ -17,13 +17,13 @@ namespace GRD.Models
         public int Count { get; set; }
         [Display(Name = "תאריך רכישה")]
         public DateTime PurchaseDate { get; set; }
-        [ForeignKey("ProductId")]
+        public int? ProductId { get; set; }
         [Display(Name = "מוצר")]
         public virtual  Product Product { get; set; }
-        [ForeignKey("BranchId")]
+        public int? BranchId { get; set; }
         [Display(Name = "סניף")]
         public virtual  Branch Branch { get; set; }
-        [ForeignKey("UserId")]
+        public int? UserId { get; set; }
         [Display(Name = "משתמש")]
         public virtual User User { get; set; }
     }

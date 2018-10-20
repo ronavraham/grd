@@ -167,6 +167,11 @@ namespace GRD.Controllers
                 return Unauthorized();
             }
             var branch = await _context.Branches.FindAsync(id);
+            if (branch == null)
+            {
+                return View("Views/Branches/NotFound.cshtml");
+            }
+            branch.Purchases.ToList().ForEach(p => branch.Purchases.Remove(p));
             _context.Branches.Remove(branch);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

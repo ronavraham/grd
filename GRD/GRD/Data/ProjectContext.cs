@@ -19,7 +19,23 @@ namespace GRD.Data
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Supplier)
                 .WithMany(b => b.Products)
-                .HasForeignKey(p => p.SupplierForeignKey);
+                .HasForeignKey(p => p.SupplierId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(p => p.Branch)
+                .WithMany(b => b.Purchases)
+                .HasForeignKey(p => p.BranchId);
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(p => p.User)
+                .WithMany(b => b.Purchases)
+                .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(p => p.Product)
+                .WithMany(b => b.Purchases)
+                .HasForeignKey(p => p.ProductId);
         }
     }
 }

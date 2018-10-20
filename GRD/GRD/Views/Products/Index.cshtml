@@ -21,11 +21,11 @@
         <div class="form-actions no-color">
             <div class='advanced_search_fields'>
                 <div>@Html.DisplayNameFor(model => model.Price)</div>
-                <input type="number" name="Price" class="form-control advanced_search_field" value=@ViewData["ProductsPriceQuery"] />
+                <input type="number" step="0.01" min="0" name="Price" class="form-control advanced_search_field" value=@ViewData["ProductsPriceQuery"] />
                 <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.Name)</div>
                 <input type="text" name="Name" class="form-control advanced_search_field" value=@ViewData["ProductsNameQuery"] />
                 <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.Size)</div>
-                <input type="number" name="Size" class="form-control advanced_search_field" value=@ViewData["ProductsSizeQuery"] />
+                <input type="number" step="0.01" min="0" name="Size" class="form-control advanced_search_field" value=@ViewData["ProductsSizeQuery"] />
             </div>
             <div class='advanced_search_submit'>
                 <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default button" />
