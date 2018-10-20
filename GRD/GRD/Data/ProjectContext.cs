@@ -10,6 +10,7 @@ namespace GRD.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
         public ProjectContext(DbContextOptions<ProjectContext> options)
             : base(options)
         { }
@@ -21,6 +22,11 @@ namespace GRD.Data
                 .WithMany(b => b.Products)
                 .HasForeignKey(p => p.SupplierId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.ProductType)
+                .WithMany(b => b.Products)
+                .HasForeignKey(p => p.ProductTypeId);
 
             modelBuilder.Entity<Purchase>()
                 .HasOne(p => p.Branch)
@@ -36,6 +42,7 @@ namespace GRD.Data
                 .HasOne(p => p.Product)
                 .WithMany(b => b.Purchases)
                 .HasForeignKey(p => p.ProductId);
+
         }
     }
 }

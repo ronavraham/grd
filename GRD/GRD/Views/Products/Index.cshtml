@@ -49,6 +49,9 @@
                     @Html.DisplayNameFor(model => model.Supplier.Name)
                 </th>
                 <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.ProductType.Name)
+                </th>
+                <th class="index-table-th">
                     @Html.DisplayNameFor(model => model.PictureName)
                 </th>
             </tr>
@@ -70,6 +73,9 @@
                     @Html.DisplayFor(modelItem => item.Supplier.Name)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.ProductType.Name)
+                </td>
+                <td>
                     <img style="height: 10vh;width: 6vw;"
                          src=@System.String.Format("/images/products/{0}",item.PictureName) />
                 </td>
@@ -77,7 +83,7 @@
                     @{
                         if (Context.Session.GetString("isLogin") == "true")
                         {
-                            <a class="btn btn-default button" style="width:39%" asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
+                            <a class="btn btn-default button" style="width:5vw" asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
                         }
                     }
                 </td>

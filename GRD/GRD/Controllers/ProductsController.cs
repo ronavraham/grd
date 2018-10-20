@@ -124,6 +124,7 @@ namespace GRD.Controllers
             }
             ViewData["Title"] = "יצירת מוצר חדש";
             PopulateSuppliersDropDownList();
+            PopulateProductTypesDropDownList();
             return View();
         }
 
@@ -132,7 +133,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId,ProductTypeId")] Product product)
         {
             if (!IsAuthorized())
             {
@@ -166,6 +167,7 @@ namespace GRD.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateSuppliersDropDownList(product.SupplierId);
+            PopulateProductTypesDropDownList(product.ProductTypeId);
 
             return View(product);
         }
@@ -189,6 +191,7 @@ namespace GRD.Controllers
                 return NotFound();
             }
             PopulateSuppliersDropDownList(product.SupplierId);
+            PopulateProductTypesDropDownList(product.ProductTypeId);
             return View(product);
         }
 
@@ -197,7 +200,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId")] Product product, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId,ProductTypeId")] Product product, IFormFile file)
         {
             if (!IsAuthorized())
             {
@@ -251,6 +254,7 @@ namespace GRD.Controllers
                 return RedirectToAction(nameof(Index));
             }
             PopulateSuppliersDropDownList(product.SupplierId);
+            PopulateProductTypesDropDownList(product.ProductTypeId);
             return View(product);
         }
 
@@ -268,6 +272,14 @@ namespace GRD.Controllers
                                  orderby d.Name
                                  select d;
             ViewBag.BranchId = new SelectList(branchesQuery, "Id", "Name", selectedBranch);
+        }
+
+        private void PopulateProductTypesDropDownList(object selectedProductType = null)
+        {
+            var ProductTypeQuery = from d in _context.ProductTypes
+                                 orderby d.Name
+                                 select d;
+            ViewBag.ProductTypeId = new SelectList(ProductTypeQuery, "Id", "Name", selectedProductType);
         }
 
         // GET: Products/Delete/5

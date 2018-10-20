@@ -28,13 +28,23 @@ namespace GRD.Data
                     new Supplier{Name="H&M"},
                     new Supplier{Name="ADIDAS"},
                 };
+            var productTypes = new ProductType[]
+            {
+                new ProductType{Name="מכנס גבר"},
+                new ProductType{Name="מכנס אישה"},
+                new ProductType{Name="חולצה גבר"},
+                new ProductType{Name="חולצה אישה"},
+                new ProductType{Name="נעליים גבר"},
+                new ProductType{Name="נעליים אישה"},
+                new ProductType{Name="שמלה"},
+            };
             var products = new Product[]
                 {
-                    new Product{Name="חולצה",Size=48,Price=51,PictureName="1.jpg", Supplier = suppliers[0]},
-                    new Product{Name="מכנס",Size=44,Price=11,PictureName="Chrysanthemum.jpg", Supplier = suppliers[1]},
-                    new Product{Name="קקקק",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
-                    new Product{Name="אאאא",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
-                    new Product{Name="בבבב",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2] },
+                    new Product{Name="חולצה",Size=48,Price=51,PictureName="1.jpg", Supplier = suppliers[0] ,ProductType = productTypes[0] },
+                    new Product{Name="מכנס",Size=44,Price=11,PictureName="Chrysanthemum.jpg", Supplier = suppliers[1], ProductType = productTypes[1] },
+                    new Product{Name="ג'ינס",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2], ProductType = productTypes[3] },
+                    new Product{Name="שמלה",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2], ProductType = productTypes[4] },
+                    new Product{Name="חולצה מגניבה",Size=23,Price=88,PictureName="Desert.jpg", Supplier = suppliers[2], ProductType = productTypes[2] },
                 };
             var Purchases = new Purchase[]
                 {
@@ -71,6 +81,16 @@ namespace GRD.Data
                 foreach (Supplier s in suppliers)
                 {
                     context.Suppliers.Add(s);
+                }
+                context.SaveChanges();
+            }
+
+            // Look for any ProductTypes.
+            if (!context.ProductTypes.Any())
+            {
+                foreach (ProductType u in productTypes)
+                {
+                    context.ProductTypes.Add(u);
                 }
                 context.SaveChanges();
             }
