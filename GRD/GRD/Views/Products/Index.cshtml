@@ -49,6 +49,9 @@
                     @Html.DisplayNameFor(model => model.Supplier.Name)
                 </th>
                 <th class="index-table-th">
+                    @Html.DisplayNameFor(model => model.ProductType.Name)
+                </th>
+                <th class="index-table-th">
                     @Html.DisplayNameFor(model => model.PictureName)
                 </th>
             </tr>
@@ -56,35 +59,38 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Size)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.Name)
-                    </td>
-                    <td>
-                        <img style="height: 10vh;width: 6vw;"
-                             src=@System.String.Format("/images/products/{0}",item.PictureName) />
-                    </td>
-                    <td>
-                        @{
-                            if (isAdmin)
-                            {
-                                <div>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-                                </div>
-                            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductType.Name)
+                </td>
+                <td>
+                    <img style="height: 10vh;width: 6vw;"
+                         src=@System.String.Format("/images/products/{0}",item.PictureName) />
+                </td>
+                <td>
+                    @{
+                        if (isAdmin)
+                        {
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                            </div>
                         }
-                    </td>
-                </tr>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

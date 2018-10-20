@@ -11,7 +11,7 @@ namespace GRD.Models
         [Key]
         [Display(Name = "מזהה")]
         public int Id { get; set; }
-        [Display(Name = "שם")]
+        [Display(Name = "סוג מוצר")]
         public string Name { get; set; }
         [Display(Name = "מוצרים")]
         public virtual List<Product> Products { get; set; }
