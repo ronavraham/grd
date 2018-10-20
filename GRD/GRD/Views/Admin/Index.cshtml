@@ -14,8 +14,11 @@
        data-size="large">
         Tweet
     </a>
-
-    <div class="staistics">
+    <h1>מכירות של מוצרים בכל סניף</h1>
+    <div class="staistics" id="stat_1">
+    </div>
+    <h1>מכירות של כל המוצרים</h1>
+    <div class="staistics" id="stat_2">
     </div>
 </div>
 
@@ -45,7 +48,10 @@
         url: '/Admin/BranchSales',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: createBranchSalesGraph,
+        success: (res) => {
+            createGraphWithData('#stat_1', res);
+            //createPieChartWithData('#stat_1', res);
+        },
     });
 
     $.ajax({
@@ -53,10 +59,11 @@
         url: '/Admin/ProductSales',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: createBranchSalesGraph,
+        success: (res) => createGraphWithData('#stat_2', res),
     });
 
-    function createBranchSalesGraph(data) {
+    function createGraphWithData(element, data) {
+        var colors = ['#F44336', '#5C6BC0', '#1E88E5', '#4DD0E1', '#0288D1', '#00897B'];
         var margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
         var height = 300;
         var width = 500;
@@ -76,7 +83,7 @@
             .range([margin.left, width - margin.right])
             .padding(0.1);
 
-        const svg = d3.select('.staistics')
+        var svg = d3.select(element)
             .append('svg')
             .attr('width', width)
             .attr('height', height);
@@ -87,7 +94,8 @@
             .attr("x", d => x(d.name))
             .attr("y", d => y(d.count))
             .attr("height", d => y(0) - y(d.count))
-            .attr("width", x.bandwidth());
+            .attr("width", x.bandwidth())
+            .attr("fill", (d, i) => { return colors[i % colors.length] });
 
         svg.append("g")
             .call(xAxis);
@@ -98,142 +106,64 @@
         svg.node();
     }
 
-    function createBranchSalesGraph(data) {
-        var margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
-        var height = 300;
+    function createPieChartWithData(element, data) {
+
+        var pie = d3.pie()
+            .sort(null)
+            .value(d => d.count);
+
+        var radius = Math.min(width, height) / 2;
+
+        var arcLabel = d3.arc().innerRadius(radius).outerRadius(radius);
+
+        var arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(Math.min(width, height) / 2 - 1);
+
         var width = 500;
-        var yAxis = g => g
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(y))
-            .call(g => g.select(".domain").remove());
-        var xAxis = g => g
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(x)
-                .tickSizeOuter(0));
-        var y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.count)]).nice()
-            .range([height - margin.bottom, margin.top]);
-        var x = d3.scaleBand()
+
+        var height = Math.min(width, 500);
+
+        var color = d3.scaleOrdinal()
             .domain(data.map(d => d.name))
-            .range([margin.left, width - margin.right])
-            .padding(0.1);
+            .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
 
-        const svg = d3.select('.staistics')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+        var arcs = pie(data);
 
-        svg.append("g")
-            .attr("fill", "steelblue")
-            .selectAll("rect").data(data).enter().append("rect")
-            .attr("x", d => x(d.name))
-            .attr("y", d => y(d.count))
-            .attr("height", d => y(0) - y(d.count))
-            .attr("width", x.bandwidth());
+        var svg = d3.select('#stat_3')
+            .attr("text-anchor", "middle")
+            .style("font", "12px sans-serif");
 
-        svg.append("g")
-            .call(xAxis);
+        var g = svg.append("g")
+            .attr("transform", `translate(${width / 2},${height / 2})`);
 
-        svg.append("g")
-            .call(yAxis);
+        g.selectAll("path")
+            .data(arcs)
+            .enter().append("path")
+            .attr("fill", d => color(d.data.name))
+            .attr("stroke", "white")
+            .attr("d", arc)
+            .append("title")
+            .text(d => `${d.data.name}: ${d.data.count.toLocaleString()}`);
 
-        svg.node();
-    }
+        var text = g.selectAll("text")
+            .data(arcs)
+            .enter().append("text")
+            .attr("transform", d => `translate(${arcLabel.centroid(d)})`)
+            .attr("dy", "0.35em");
 
-    function createBranchSalesGraph(data) {
-        var margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
-        var height = 300;
-        var width = 500;
-        var yAxis = g => g
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(y))
-            .call(g => g.select(".domain").remove());
-        var xAxis = g => g
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(x)
-                .tickSizeOuter(0));
-        var y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.count)]).nice()
-            .range([height - margin.bottom, margin.top]);
-        var x = d3.scaleBand()
-            .domain(data.map(d => d.name))
-            .range([margin.left, width - margin.right])
-            .padding(0.1);
+        text.append("tspan")
+            .attr("x", 0)
+            .attr("y", "-0.7em")
+            .style("font-weight", "bold")
+            .text(d => d.data.name);
 
-        const svg = d3.select('.staistics')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
-
-        svg.append("g")
-            .attr("fill", "steelblue")
-            .selectAll("rect").data(data).enter().append("rect")
-            .attr("x", d => x(d.name))
-            .attr("y", d => y(d.count))
-            .attr("height", d => y(0) - y(d.count))
-            .attr("width", x.bandwidth());
-
-        svg.append("g")
-            .call(xAxis);
-
-        svg.append("g")
-            .call(yAxis);
+        text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+            .attr("x", 0)
+            .attr("y", "0.7em")
+            .attr("fill-opacity", 0.7)
+            .text(d => d.data.count.toLocaleString());
 
         svg.node();
     }
 </script>
-
-@*<script>
-    const data =
-        [
-            { "region": "North", "count": "53245" },
-            { "region": "South", "count": "28479" },
-            { "region": "East", "count": "19697" },
-            { "region": "West", "count": "24037" },
-            { "region": "Central", "count": "40245" }
-        ];
-
-    const width = 540;
-    const height = 540;
-    const radius = Math.min(width, height) / 2;
-
-    const svg = d3.select('.staistics')
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", `translate(${width / 2}, ${height / 2})`);
-
-    const color = d3.scaleOrdinal(["#66c2a5", "#fc8d62", "#8da0cb",
-        "#e78ac3", "#a6d854", "#ffd92f"]);
-
-    const pie = d3.pie()
-        .value(d => d.count)
-        .sort(null);
-
-    const arc = d3.arc()
-        .innerRadius(0)
-        .outerRadius(radius);
-
-    function arcTween(a) {
-        const i = d3.interpolate(this._current, a);
-        this._current = i(1);
-        return (t) => arc(i(t));
-    }
-
-    // Join new data
-    const path = svg.selectAll("path")
-        .data(pie(data));
-
-    // Update existing arcs
-    path.transition().duration(200).attrTween("d", arcTween);
-
-    // Enter new arcs
-    path.enter().append("path")
-        .attr("fill", (d, i) => color(i))
-        .attr("d", arc)
-        .attr("stroke", "white")
-        .attr("stroke-width", "6px")
-        .each(function (d) { this._current = d; });
-
-</script>*@
