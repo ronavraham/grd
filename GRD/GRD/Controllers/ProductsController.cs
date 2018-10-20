@@ -31,6 +31,67 @@ namespace GRD.Controllers
             return View(await _context.Products.ToListAsync());
         }
 
+        public async Task<IActionResult> PurchaseProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            Purchase p = new Purchase
+            {
+                UserId = int.Parse(HttpContext.Session.GetString("userid")),
+                Count = 0,
+                BranchId = null,
+                PurchaseDate = DateTime.Now,
+                ProductId = id,
+                Product = product
+            };
+            PopulateBranchesDropDownList();
+            return View(p);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PurchaseProduct([Bind("Count,PurchaseDate,ProductId,id,BranchId, UserId")] Purchase purchase)
+        {
+            if (HttpContext.Session.GetString("isLogin") != "true")
+            {
+                return Unauthorized();
+            }
+
+            // case the user put new image to update
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if( !_context.Products.Any(val=>val.Id == purchase.ProductId) ||
+                        !_context.Branches.Any(val => val.Id == purchase.BranchId) ||
+                        !_context.Users.Any(val => val.Id == purchase.UserId))
+                    {
+                        return NotFound();
+                    }
+                    _context.Add(purchase);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(purchase.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            PopulateBranchesDropDownList(purchase.BranchId);
+            return View(@"Views\Products\Index.cshtml");
+        }
+
         // GET: Products by query
         public async Task<IActionResult> Search(int Price, string Name, int Size)
         {
@@ -72,7 +133,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierForeignKey,ProductTypeForeignKey")] Product product)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Price,Name,Size,id,SupplierId")] Product product)
         {
             if (!IsAuthorized())
             {
@@ -139,7 +200,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierForeignKey,ProductTypeForeignKey")] Product product, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Price,Name,Size,Id,PictureName,SupplierId")] Product product, IFormFile file)
         {
             if (!IsAuthorized())
             {
@@ -202,7 +263,15 @@ namespace GRD.Controllers
             var suppliersQuery = from d in _context.Suppliers
                                    orderby d.Name
                                    select d;
-            ViewBag.SupplierForeignKey = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
+            ViewBag.SupplierId = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
+        }
+
+        private void PopulateBranchesDropDownList(object selectedBranch = null)
+        {
+            var branchesQuery = from d in _context.Branches
+                                 orderby d.Name
+                                 select d;
+            ViewBag.BranchId = new SelectList(branchesQuery, "Id", "Name", selectedBranch);
         }
 
         private void PopulateProductTypesDropDownList(object selectedProductType = null)

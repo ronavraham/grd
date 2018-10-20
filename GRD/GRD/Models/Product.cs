@@ -16,7 +16,6 @@ namespace GRD.Models
         [Range(0, double.MaxValue)]
         public double Price { get; set; }
         [Display(Name = "גודל")]
-        [Range(1, 3)]
         public int Size { get; set; }
         [Display(Name = "תמונה")]
         public string PictureName { get; set; }
