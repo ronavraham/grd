@@ -14,6 +14,6 @@ namespace GRD.Models
         [Display(Name = "שם")]
         public string Name { get; set; }
         [Display(Name = "מוצרים")]
-        public List<Product> Products;
+        public virtual List<Product> Products { get; set; }
     }
 }
