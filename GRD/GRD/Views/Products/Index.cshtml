@@ -73,17 +73,17 @@
                     <img style="height: 10vh;width: 6vw;"
                          src=@System.String.Format("/images/products/{0}",item.PictureName) />
                 </td>
-                <td>
+                <td style="vertical-align:middle">
                     @{
-                        if (isAdmin)
+                        if (Context.Session.GetString("isLogin") == "true")
                         {
-                            <a asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
+                            <a class="btn btn-default button" style="width:39%" asp-action="PurchaseProduct" asp-route-id="@item.Id">רכוש</a>
                         }
                     }
                 </td>
                 <td>
                     @{
-                        if (Context.Session.GetString("userid") != "0")
+                        if (isAdmin)
                         {
                             <div>
                                 <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |

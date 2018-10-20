@@ -55,7 +55,7 @@ namespace GRD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PurchaseProduct([Bind("Count,PurchaseDate,ProductId,id,BranchId, UserId")] Purchase purchase)
         {
-            if (!IsAuthorized())
+            if (HttpContext.Session.GetString("isLogin") != "true")
             {
                 return Unauthorized();
             }
