@@ -11,20 +11,26 @@
 
 <div class='create_edit_form_container'>
     <form asp-action="Login" class='create_edit_form'>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">שם משתמש</label>
-                <input name="UserName" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">סיסמא</label>
-                <input type="password" name="Password" class="form-control" />
-            </div>
-            <div class="form-group form_footer">
-                <input type="submit" value="התחבר" class="btn btn-default button" />
-            </div>
-        </form>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="control-label">שם משתמש</label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">סיסמא</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group form_footer">
+            <input type="submit" value="התחבר" class="btn btn-default button" />
+        </div>
+    </form>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
 
