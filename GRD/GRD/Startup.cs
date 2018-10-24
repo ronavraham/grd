@@ -39,9 +39,7 @@ namespace GRD
             services.AddMvc(o => o.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(val => "חובה להזין מספר")).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
             services.AddSession();
 
-            var connection = @"Server=tcp:webproject2018.database.windows.net,1433;Initial Catalog=WebProject2018;Persist Security Info=False;
-                               User ID=ronavrham;Password=Dbpaa2018;MultipleActiveResultSets=False;Encrypt=True;
-                               TrustServerCertificate=False;Connection Timeout=30;";
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=fuck_colman;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<ProjectContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
