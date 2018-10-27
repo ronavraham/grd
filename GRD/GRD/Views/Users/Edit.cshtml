@@ -8,6 +8,15 @@
     <h2 class='page_title'>עריכת משתמש</h2>
 </div>
 
+@{
+    if (ViewData["errorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["errorMessage"]
+        </div>
+    }
+}
+
 
 <div class='create_edit_form_container'>
     <form asp-action="Edit" class='create_edit_form'>
@@ -55,7 +64,7 @@
         <div class="form-group">
             <div class="checkbox">
                 <label style="font-weight:bold">
-                    @Html.DisplayNameFor(model=>model.IsAdmin)
+                    @Html.DisplayNameFor(model => model.IsAdmin)
                 </label>
                 <div>
                     <input asp-for="IsAdmin" type="checkbox" name="isAdmin" value="@Html.DisplayFor(model=>model.IsAdmin)" />

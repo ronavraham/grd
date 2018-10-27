@@ -8,6 +8,14 @@
     <h2 class='page_title'>יצירת משתמש</h2>
 </div>
 
+@{
+    if (ViewData["errorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["errorMessage"]
+        </div>
+    }
+}
 
 <div class='create_edit_form_container'>
     <form asp-action="Create" class='create_edit_form'>

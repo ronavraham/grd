@@ -76,6 +76,11 @@ namespace GRD.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (_context.Users.Any(e => e.Username == user.Username))
+                {
+                    ViewData["errorMessage"] = "שם משתמש זה קיים כבר במערכת";
+                    return View(nameof(Create));
+                }
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -123,6 +128,13 @@ namespace GRD.Controllers
             {
                 try
                 {
+                    // check if the edit user change it name, and if it did check if there is already Username in the db.
+                    if (_context.Users.AsNoTracking().FirstOrDefault(u => u.Id == id).Username != user.Username &&
+                        _context.Users.Any(e => e.Username == user.Username))
+                    {
+                        ViewData["errorMessage"] = "שם משתמש זה קיים כבר במערכת";
+                        return View(nameof(Edit));
+                    }
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
