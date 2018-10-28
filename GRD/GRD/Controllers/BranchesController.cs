@@ -73,7 +73,7 @@ namespace GRD.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(branch);
+            return BadRequest();
         }
 
         // GET: Branches/Edit/5
@@ -132,7 +132,7 @@ namespace GRD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(branch);
+            return BadRequest();
         }
 
         // GET: Branches/Delete/5
