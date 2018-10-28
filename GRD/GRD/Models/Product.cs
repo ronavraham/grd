@@ -10,12 +10,17 @@ namespace GRD.Models
         [Key]
         [Display(Name = "מזהה")]
         public int Id { get; set; }
+        [Required]
         [Display(Name = "שם")]
+        [StringLength(60, MinimumLength = 0)]
         public string Name { get; set; }
+        [Required]
         [Display(Name = "מחיר")]
         [Range(0, double.MaxValue)]
         public double Price { get; set; }
+        [Required]
         [Display(Name = "גודל")]
+        [Range(0, int.MaxValue)]
         public int Size { get; set; }
         [Display(Name = "תמונה")]
         public string PictureName { get; set; }

@@ -65,7 +65,7 @@ namespace GRD.Controllers
             {
                 try
                 {
-                    if( !_context.Products.Any(val=>val.Id == purchase.ProductId) ||
+                    if (!_context.Products.Any(val => val.Id == purchase.ProductId) ||
                         !_context.Branches.Any(val => val.Id == purchase.BranchId) ||
                         !_context.Users.Any(val => val.Id == purchase.UserId))
                     {
@@ -139,37 +139,46 @@ namespace GRD.Controllers
             {
                 return Unauthorized();
             }
-            // get the image name and save the path to the saved pictures
-            var filePath = _staticImagesRoute + file.FileName;
 
-            // save the image name to the pictureName property so we get it later for the view
-            product.PictureName = file.FileName;
-
-            // save the picture to the static path
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            if(file == null)
             {
-                await file.CopyToAsync(stream);
+                ViewData["errorMessage"] = "הנך חייב לשים תמונה למוצר!";
+                PopulateSuppliersDropDownList();
+                PopulateProductTypesDropDownList();
+                return View(nameof(Create));
             }
 
-            try
+            if (ModelState.IsValid)
             {
-                // save to DB
-                if (ModelState.IsValid)
+                // get the image name and save the path to the saved pictures
+                var filePath = _staticImagesRoute + file.FileName;
+
+                // save the image name to the pictureName property so we get it later for the view
+                product.PictureName = file.FileName;
+
+                // save the picture to the static path
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
+                    await file.CopyToAsync(stream);
+                }
+
+                try
+                {
+                    // save to DB
                     _context.Add(product);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+                PopulateSuppliersDropDownList(product.SupplierId);
+                PopulateProductTypesDropDownList(product.ProductTypeId);
             }
-            catch (RetryLimitExceededException /* dex */)
-            {
-                //Log the error (uncomment dex variable name and add a line here to write a log.)
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-            }
-            PopulateSuppliersDropDownList(product.SupplierId);
-            PopulateProductTypesDropDownList(product.ProductTypeId);
 
-            return View(product);
+            return BadRequest();
         }
 
         // GET: Products/Edit/5
@@ -261,24 +270,24 @@ namespace GRD.Controllers
         private void PopulateSuppliersDropDownList(object selectedSupplier = null)
         {
             var suppliersQuery = from d in _context.Suppliers
-                                   orderby d.Name
-                                   select d;
+                                 orderby d.Name
+                                 select d;
             ViewBag.SupplierId = new SelectList(suppliersQuery, "Id", "Name", selectedSupplier);
         }
 
         private void PopulateBranchesDropDownList(object selectedBranch = null)
         {
             var branchesQuery = from d in _context.Branches
-                                 orderby d.Name
-                                 select d;
+                                orderby d.Name
+                                select d;
             ViewBag.BranchId = new SelectList(branchesQuery, "Id", "Name", selectedBranch);
         }
 
         private void PopulateProductTypesDropDownList(object selectedProductType = null)
         {
             var ProductTypeQuery = from d in _context.ProductTypes
-                                 orderby d.Name
-                                 select d;
+                                   orderby d.Name
+                                   select d;
             ViewBag.ProductTypeId = new SelectList(ProductTypeQuery, "Id", "Name", selectedProductType);
         }
 
