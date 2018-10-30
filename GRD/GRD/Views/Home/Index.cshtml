@@ -34,7 +34,8 @@
 
 <script src='~/lib/jquery/dist/jquery.js'></script>
 <script>
-    $(document).ready(getLocation)
+    //$(document).ready(getLocation)
+    $(document).ready(fetchPossibleProducts)
 
     function getLocation() {
         if (navigator.geolocation) {
@@ -45,7 +46,7 @@
     function fetchNearestBranch(position) {
         $.ajax({
             type: 'GET',
-            url: '/Home/AjaxGetCall',
+            url: '/Home/NearestBranch',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: getWeather,
@@ -53,6 +54,15 @@
                 lng: position.coords.longitude,
                 lat: position.coords.latitude
             }
+        })
+    }
+
+    function fetchPossibleProducts() {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/PredictPossibleProducts',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         })
     }
 

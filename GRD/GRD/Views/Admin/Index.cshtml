@@ -9,16 +9,21 @@
 </style>
 
 <div>
-    <a class="twitter-share-button"
+    <a id="twitt_button" class="twitter-share-button"
        href="https://twitter.com/intent/tweet?text="
        data-size="large">
         Tweet
     </a>
-    <h1>מכירות של מוצרים בכל סניף</h1>
-    <div class="staistics" id="stat_1">
-    </div>
-    <h1>מכירות של כל המוצרים</h1>
-    <div class="staistics" id="stat_2">
+    
+    <div class='graphs_container'>
+        <div class='graph'>
+            <h1>מכירות של מוצרים בכל סניף</h1>
+            <div class="staistics" id="stat_1"></div>
+        </div>
+        <div class='graph'>
+            <h1>מכירות של כל המוצרים</h1>
+            <div class="staistics" id="stat_2"></div>
+        </div>
     </div>
 </div>
 
@@ -104,6 +109,8 @@
             .call(yAxis);
 
         svg.node();
+
+        $('.graphs_container').css('visibility', 'visible');
     }
 
     function createPieChartWithData(element, data) {
@@ -166,4 +173,29 @@
 
         svg.node();
     }
+</script>
+<script>
+    /*setTimeout(function () {
+        $('#twitter-widget-0').css('width', '64px');
+        $('#twitter-widget-0').css('height', '64px');
+
+        setTimeout(function () {
+            $("[data-scribe='page:button']").css('height', '100%');
+            $("[data-scribe='page:button']").css('width', '100%');
+
+            $("[data-scribe='section:share']").css('height', '100%');
+            $("[data-scribe='section:share']").css('width', '100%');
+
+            $(".btn-o").css('height', '100%');
+            $(".btn-o").css('width', '100%');
+
+            $("#widget").css('height', '100%');
+            $("#widget").css('width', '100%');
+
+            $('#twitt_button').addClass('twitter_button')
+        }, 1000)
+        
+    }, 2000)*/
+   
+    
 </script>
