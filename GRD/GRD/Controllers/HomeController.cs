@@ -60,7 +60,7 @@ namespace GRD.Controllers
             var userId = 0;
             var didParsed = Int32.TryParse(userIdString, out userId);
 
-            if (!didParsed)
+            if (!didParsed || userId == -1)
             {
                 return Json(new { });
             }
@@ -102,24 +102,24 @@ namespace GRD.Controllers
              * Creating the model
              * ############################### */
 
-            var smo = new SequentialMinimalOptimization<Gaussian>()
-            {
-                Complexity = 100
-            };
+            //var smo = new SequentialMinimalOptimization<Gaussian>()
+            //{
+            //    Complexity = 100
+            //};
 
-            var svm = smo.Learn(inputs, outputs);
+            //var svm = smo.Learn(inputs, outputs);
 
-            var knn1 = new KNearestNeighbors(k: 1);
-            var knn2 = new KNearestNeighbors(k: 2);
-            var knn3 = new KNearestNeighbors(k: 3);
-            var knn4 = new KNearestNeighbors(k: 4);
-            var knn5 = new KNearestNeighbors(k: 5);
+            //var knn1 = new KNearestNeighbors(k: 1);
+            //var knn2 = new KNearestNeighbors(k: 2);
+            //var knn3 = new KNearestNeighbors(k: 3);
+            //var knn4 = new KNearestNeighbors(k: 4);
+            //var knn5 = new KNearestNeighbors(k: 5);
 
-            knn1.Learn(inputs, outputs);
-            knn2.Learn(inputs, outputs);
-            knn3.Learn(inputs, outputs);
-            knn4.Learn(inputs, outputs);
-            knn5.Learn(inputs, outputs);
+            //knn1.Learn(inputs, outputs);
+            //knn2.Learn(inputs, outputs);
+            //knn3.Learn(inputs, outputs);
+            //knn4.Learn(inputs, outputs);
+            //knn5.Learn(inputs, outputs);
 
 
             /* ###############################
@@ -225,27 +225,27 @@ namespace GRD.Controllers
             //    .Where(x => predictedProductId.Contains(x.Id))
             //    .ToList();
 
-            //var codification = new Codification<double>()
-            //{
-            //    CodificationVariable.Discrete,
-            //    CodificationVariable.Categorical,
-            //    CodificationVariable.Categorical
-            //};
+            var codification = new Codification<double>()
+            {
+                CodificationVariable.Discrete,
+                CodificationVariable.Categorical,
+                CodificationVariable.Categorical
+            };
 
-            //// Learn the codification from observations
-            //var model = codification.Learn(inputs);
+            // Learn the codification from observations
+            var model = codification.Learn(inputs);
 
-            //// Transform the mixed observations into only continuous:
-            //double[][] newInputs = model.ToDouble().Transform(inputs);
+            // Transform the mixed observations into only continuous:
+            double[][] newInputs = model.ToDouble().Transform(inputs);
 
             KMeans kmeans = new KMeans(k: 4)
             {
                 // For example, let's say we would like to consider the importance of 
                 // the first column as 0.1, the second column as 0.7 and the third 0.9
-                Distance = new WeightedSquareEuclidean(new double[] { 1, 2, 1})
+                Distance = new WeightedSquareEuclidean(new double[] { 1, 8, 8, 4, 4, 4, 4, 4, 4 })
             };
-            var clusters = kmeans.Learn(inputs);
-            int[] labels = clusters.Decide(inputs);
+            var clusters = kmeans.Learn(newInputs);
+            int[] labels = clusters.Decide(newInputs);
 
             var purchasesById = _context.Purchases
                 .Select(x => new
@@ -258,7 +258,7 @@ namespace GRD.Controllers
                 .GroupBy(x => x.userId)
                 .ToList();
 
-            IList<Tuple<int, int>> labelsForUsers = new List<Tuple<int, int>>();
+            IList<Tuple<int, int[]>> labelsForUsers = new List<Tuple<int, int[]>>();
             for (int i = 0; i < purchasesById.Count; i++)
             {
                 var userInputs = purchasesById[i].
@@ -275,19 +275,19 @@ namespace GRD.Controllers
                     })
                     .ToArray();
 
-                //double[][] newUserInputs = model.ToDouble().Transform(userInputs);
-                var label = clusters.Decide(inputs)
-                    .GroupBy(x => x)
-                    .Select(x => new
-                    {
-                        label = x,
-                        count = x.Count()
-                    })
-                    .OrderByDescending(x => x.count)
-                    .First()
-                    .label
-                    .Key;
-                labelsForUsers.Add(new Tuple<int, int>(purchasesById[i].Key, label));
+                double[][] newUserInputs = model.ToDouble().Transform(userInputs);
+                //var label = clusters.Decide(newUserInputs)
+                //    .GroupBy(x => x)
+                //    .Select(x => new
+                //    {
+                //        label = x,
+                //        count = x.Count()
+                //    })
+                //    .OrderByDescending(x => x.count)
+                //    .First()
+                //    .label
+                //    .Key;
+                labelsForUsers.Add(new Tuple<int, int[]>(purchasesById[i].Key, clusters.Decide(newUserInputs).Distinct().ToArray()));
             }
 
             var productIdsUserBought = _context.Purchases
@@ -326,7 +326,7 @@ namespace GRD.Controllers
             var userLabels = labelsForUsers.Where(x => x.Item1 == userId).FirstOrDefault().Item2;
             for (int i = 0; i < lol.Length; i++)
             {
-                if (userLabels == lol[i])
+                if (userLabels.Contains(lol[i]))
                 {
                     productIdsPrediction.Add(productsToPredict[i].id);
                 }

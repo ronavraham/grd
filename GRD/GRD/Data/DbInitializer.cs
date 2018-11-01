@@ -129,132 +129,132 @@ namespace GRD.Data
             var Purchases = new Purchase[]
                 {
 					// admin
-                    new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[0],Branch=branches[0],User=users[0]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[1],Branch=branches[0],User=users[0]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[20],Branch=branches[0],User=users[0]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[21],Branch=branches[0],User=users[0]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[40],Branch=branches[0],User=users[0]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[41],Branch=branches[0],User=users[0]},
+     //               new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[0],Branch=branches[0],User=users[0]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[1],Branch=branches[0],User=users[0]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[20],Branch=branches[0],User=users[0]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[21],Branch=branches[0],User=users[0]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[40],Branch=branches[0],User=users[0]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[41],Branch=branches[0],User=users[0]},
 					
-					// userMaleSmall1
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[2],Branch=branches[0],User=users[1]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[3],Branch=branches[0],User=users[1]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[22],Branch=branches[0],User=users[1]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[23],Branch=branches[0],User=users[1]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[42],Branch=branches[0],User=users[1]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[43],Branch=branches[0],User=users[1]},
+					//// userMaleSmall1
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[2],Branch=branches[0],User=users[1]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[3],Branch=branches[0],User=users[1]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[22],Branch=branches[0],User=users[1]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[23],Branch=branches[0],User=users[1]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[42],Branch=branches[0],User=users[1]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[43],Branch=branches[0],User=users[1]},
 					
-					// userMaleSmall2
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[3],Branch=branches[0],User=users[2]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[4],Branch=branches[0],User=users[2]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[23],Branch=branches[0],User=users[2]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[24],Branch=branches[0],User=users[2]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[43],Branch=branches[0],User=users[2]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[44],Branch=branches[0],User=users[2]},
+					//// userMaleSmall2
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[3],Branch=branches[0],User=users[2]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[4],Branch=branches[0],User=users[2]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[23],Branch=branches[0],User=users[2]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[24],Branch=branches[0],User=users[2]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[43],Branch=branches[0],User=users[2]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[44],Branch=branches[0],User=users[2]},
 					
-					// userMaleSmall3
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[0],Branch=branches[0],User=users[3]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[4],Branch=branches[0],User=users[3]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[20],Branch=branches[0],User=users[3]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[24],Branch=branches[0],User=users[3]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[40],Branch=branches[0],User=users[3]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[44],Branch=branches[0],User=users[3]},
+					//// userMaleSmall3
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[0],Branch=branches[0],User=users[3]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[4],Branch=branches[0],User=users[3]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[20],Branch=branches[0],User=users[3]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[24],Branch=branches[0],User=users[3]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[40],Branch=branches[0],User=users[3]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[44],Branch=branches[0],User=users[3]},
 					
-					// userMaleBig1
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[5],Branch=branches[0],User=users[4]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[6],Branch=branches[0],User=users[4]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[25],Branch=branches[0],User=users[4]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[26],Branch=branches[0],User=users[4]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[45],Branch=branches[0],User=users[4]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[46],Branch=branches[0],User=users[4]},
+					//// userMaleBig1
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[5],Branch=branches[0],User=users[4]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[6],Branch=branches[0],User=users[4]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[25],Branch=branches[0],User=users[4]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[26],Branch=branches[0],User=users[4]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[45],Branch=branches[0],User=users[4]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[46],Branch=branches[0],User=users[4]},
 					
-					// userMaleBig2
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[7],Branch=branches[0],User=users[5]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[8],Branch=branches[0],User=users[5]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[27],Branch=branches[0],User=users[5]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[28],Branch=branches[0],User=users[5]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[47],Branch=branches[0],User=users[5]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[48],Branch=branches[0],User=users[5]},
+					//// userMaleBig2
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[7],Branch=branches[0],User=users[5]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[8],Branch=branches[0],User=users[5]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[27],Branch=branches[0],User=users[5]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[28],Branch=branches[0],User=users[5]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[47],Branch=branches[0],User=users[5]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[48],Branch=branches[0],User=users[5]},
 					
-					// userMaleBig3
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[8],Branch=branches[0],User=users[6]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[9],Branch=branches[0],User=users[6]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[28],Branch=branches[0],User=users[6]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[29],Branch=branches[0],User=users[6]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[48],Branch=branches[0],User=users[6]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[49],Branch=branches[0],User=users[6]},
+					//// userMaleBig3
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[8],Branch=branches[0],User=users[6]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[9],Branch=branches[0],User=users[6]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[28],Branch=branches[0],User=users[6]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[29],Branch=branches[0],User=users[6]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[48],Branch=branches[0],User=users[6]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[49],Branch=branches[0],User=users[6]},
 					
-					// userMaleBig4
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[5],Branch=branches[0],User=users[7]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[9],Branch=branches[0],User=users[7]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[25],Branch=branches[0],User=users[7]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[29],Branch=branches[0],User=users[7]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[45],Branch=branches[0],User=users[7]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[49],Branch=branches[0],User=users[7]},
+					//// userMaleBig4
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[5],Branch=branches[0],User=users[7]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[9],Branch=branches[0],User=users[7]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[25],Branch=branches[0],User=users[7]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[29],Branch=branches[0],User=users[7]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[45],Branch=branches[0],User=users[7]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[49],Branch=branches[0],User=users[7]},
 					
-					// userFemaleSmall1
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[10],Branch=branches[0],User=users[8]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[11],Branch=branches[0],User=users[8]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[30],Branch=branches[0],User=users[8]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[31],Branch=branches[0],User=users[8]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[50],Branch=branches[0],User=users[8]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[51],Branch=branches[0],User=users[8]},
+					//// userFemaleSmall1
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[10],Branch=branches[0],User=users[8]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[11],Branch=branches[0],User=users[8]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[30],Branch=branches[0],User=users[8]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[31],Branch=branches[0],User=users[8]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[50],Branch=branches[0],User=users[8]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[51],Branch=branches[0],User=users[8]},
 					
-					// userFemaleSmall2
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[12],Branch=branches[0],User=users[9]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[13],Branch=branches[0],User=users[9]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[32],Branch=branches[0],User=users[9]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[33],Branch=branches[0],User=users[9]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[52],Branch=branches[0],User=users[9]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[53],Branch=branches[0],User=users[9]},
+					//// userFemaleSmall2
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[12],Branch=branches[0],User=users[9]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[13],Branch=branches[0],User=users[9]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[32],Branch=branches[0],User=users[9]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[33],Branch=branches[0],User=users[9]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[52],Branch=branches[0],User=users[9]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[53],Branch=branches[0],User=users[9]},
 					
-					// userFemaleSmall3
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[13],Branch=branches[0],User=users[10]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[14],Branch=branches[0],User=users[10]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[33],Branch=branches[0],User=users[10]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[34],Branch=branches[0],User=users[10]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[53],Branch=branches[0],User=users[10]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[54],Branch=branches[0],User=users[10]},
+					//// userFemaleSmall3
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[13],Branch=branches[0],User=users[10]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[14],Branch=branches[0],User=users[10]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[33],Branch=branches[0],User=users[10]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[34],Branch=branches[0],User=users[10]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[53],Branch=branches[0],User=users[10]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[54],Branch=branches[0],User=users[10]},
 					
-					// userFemaleSmall4
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[10],Branch=branches[0],User=users[11]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[14],Branch=branches[0],User=users[11]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[30],Branch=branches[0],User=users[11]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[34],Branch=branches[0],User=users[11]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[50],Branch=branches[0],User=users[11]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[54],Branch=branches[0],User=users[11]},
+					//// userFemaleSmall4
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[10],Branch=branches[0],User=users[11]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[14],Branch=branches[0],User=users[11]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[30],Branch=branches[0],User=users[11]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[34],Branch=branches[0],User=users[11]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[50],Branch=branches[0],User=users[11]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[54],Branch=branches[0],User=users[11]},
 					
-					// userFemaleBig1
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[15],Branch=branches[0],User=users[12]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[16],Branch=branches[0],User=users[12]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[35],Branch=branches[0],User=users[12]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[36],Branch=branches[0],User=users[12]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[55],Branch=branches[0],User=users[12]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[56],Branch=branches[0],User=users[12]},
+					//// userFemaleBig1
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[15],Branch=branches[0],User=users[12]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[16],Branch=branches[0],User=users[12]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[35],Branch=branches[0],User=users[12]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[36],Branch=branches[0],User=users[12]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[55],Branch=branches[0],User=users[12]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[56],Branch=branches[0],User=users[12]},
 					
-					// userFemaleBig2
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[17],Branch=branches[0],User=users[13]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[18],Branch=branches[0],User=users[13]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[37],Branch=branches[0],User=users[13]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[38],Branch=branches[0],User=users[13]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[57],Branch=branches[0],User=users[13]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[58],Branch=branches[0],User=users[13]},
+					//// userFemaleBig2
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[17],Branch=branches[0],User=users[13]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[18],Branch=branches[0],User=users[13]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[37],Branch=branches[0],User=users[13]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[38],Branch=branches[0],User=users[13]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[57],Branch=branches[0],User=users[13]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[58],Branch=branches[0],User=users[13]},
 					
-					// userFemaleBig3
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[18],Branch=branches[0],User=users[14]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[19],Branch=branches[0],User=users[14]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[38],Branch=branches[0],User=users[14]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[39],Branch=branches[0],User=users[14]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[58],Branch=branches[0],User=users[14]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[59],Branch=branches[0],User=users[14]},
+					//// userFemaleBig3
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[18],Branch=branches[0],User=users[14]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[19],Branch=branches[0],User=users[14]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[38],Branch=branches[0],User=users[14]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[39],Branch=branches[0],User=users[14]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[58],Branch=branches[0],User=users[14]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[59],Branch=branches[0],User=users[14]},
 					
-					// userFemaleBig4
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[15],Branch=branches[0],User=users[15]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[19],Branch=branches[0],User=users[15]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[35],Branch=branches[0],User=users[15]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[39],Branch=branches[0],User=users[15]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[55],Branch=branches[0],User=users[15]},
-					new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[59],Branch=branches[0],User=users[15]},
+					//// userFemaleBig4
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[15],Branch=branches[0],User=users[15]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[19],Branch=branches[0],User=users[15]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[35],Branch=branches[0],User=users[15]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[39],Branch=branches[0],User=users[15]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[55],Branch=branches[0],User=users[15]},
+					//new Purchase{Count=3,PurchaseDate=new DateTime(2018,9,22),Product=products[59],Branch=branches[0],User=users[15]},
                 };
 
             // Look for any Users.
