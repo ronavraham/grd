@@ -69,6 +69,169 @@ namespace GRD.Controllers
                 .Where(x => x.Id == userId)
                 .Select(x => x.Gender)
                 .SingleOrDefault();
+
+            var trainData = _context.Purchases
+                .OrderBy(x => x.UserId)
+                .Select(x => new
+                {
+                    userId = x.UserId.Value,
+                    size = x.Product.Size,
+                    type = x.Product.ProductTypeId,
+                    gender = x.User.Gender,
+                })
+                .ToList();
+
+            var inputs = trainData.Select(x =>
+            {
+                double[] res = new double[]
+                {
+                    Convert.ToInt32(x.gender),
+                    x.type.Value,
+                    x.size
+                };
+
+                return res;
+            })
+            .ToArray();
+
+            var codification = new Codification<double>()
+            {
+                CodificationVariable.Categorical,
+                CodificationVariable.Categorical,
+                CodificationVariable.Discrete
+            };
+
+            // Learn the codification from observations
+            var model = codification.Learn(inputs);
+
+            // Transform the mixed observations into only continuous:
+            double[][] newInputs = model.ToDouble().Transform(inputs);
+
+            KMeans kmeans = new KMeans(k: 4)
+            {
+                // For example, let's say we would like to consider the importance of 
+                // the first column as 0.1, the second column as 0.7 and the third 0.9
+                Distance = new WeightedSquareEuclidean(new double[] { 3, 3, 1, 1, 1, 1, 1, 1, 1 })
+            };
+            var clusters = kmeans.Learn(newInputs);
+            int[] labels = clusters.Decide(newInputs);
+
+            var knn5 = new KNearestNeighbors(k: 5);
+
+            knn5.Learn(newInputs, labels);
+
+            var purchasesById = _context.Purchases
+                .Select(x => new
+                {
+                    userId = x.UserId.Value,
+                    size = x.Product.Size,
+                    type = x.Product.ProductTypeId,
+                    gender = x.User.Gender
+                })
+                .GroupBy(x => x.userId)
+                .ToList();
+
+            IList<Tuple<int, int>> labelsForUsers = new List<Tuple<int, int>>();
+            for (int i = 0; i < purchasesById.Count; i++)
+            {
+                var userInputs = purchasesById[i].
+                    Select(x =>
+                    {
+                        double[] res = new double[]
+                        {
+                            Convert.ToInt32(x.gender),
+                            x.type.Value,
+                            x.size
+                        };
+
+                        return res;
+                    })
+                    .ToArray();
+
+                //double[][] newUserInputs = model.ToDouble().Transform(userInputs);
+                double[][] newUserInputs = model.ToDouble().Transform(userInputs);
+                var label = clusters.Decide(newUserInputs)
+                    .GroupBy(x => x)
+                    .Select(x => new
+                    {
+                        label = x,
+                        count = x.Count()
+                    })
+                    .OrderByDescending(x => x.count)
+                    .First()
+                    .label
+                    .Key;
+                //labelsForUsers.Add(new Tuple<int, int[]>(purchasesById[i].Key, clusters.Decide(newUserInputs).Distinct().ToArray()));
+                labelsForUsers.Add(new Tuple<int, int>(purchasesById[i].Key, label));
+            }
+
+            var productIdsUserBought = _context.Purchases
+                .Where(x => x.UserId == userId)
+                .Select(x => x.ProductId)
+                .Distinct()
+                .ToList();
+
+            var productsToPredict = _context.Products
+                .Where(x => !productIdsUserBought.Contains(x.Id))
+                .Select(x => new
+                {
+                    id = x.Id,
+                    size = x.Size,
+                    type = x.ProductTypeId,
+                    gender = userGender,
+                })
+                .ToList();
+
+            var predInputs = productsToPredict.Select(x =>
+            {
+                double[] res = new double[]
+                {
+                    Convert.ToInt32(x.gender),
+                    x.type.Value,
+                    x.size
+                };
+
+                return res;
+            })
+            .ToArray();
+            double[][] newPredInputs = model.ToDouble().Transform(predInputs);
+
+            int[] lol = knn5.Decide(newPredInputs);
+
+            IList<int> productIdsPrediction = new List<int>();
+            var userLabels = labelsForUsers.Where(x => x.Item1 == userId).FirstOrDefault().Item2;
+            for (int i = 0; i < lol.Length; i++)
+            {
+                if (userLabels == lol[i])
+                {
+                    productIdsPrediction.Add(productsToPredict[i].id);
+                }
+            }
+
+            var predictedProduct = _context.Products
+                .Where(x => productIdsPrediction.Contains(x.Id))
+                .ToList();
+
+            //5int[] userLabels = clusters.Decide(userPurchaces);
+            return Json(1);
+        }
+
+        [HttpGet]
+        public JsonResult PredictPossibleProducts1()
+        {
+            var userIdString = HttpContext.Session.GetString("userid");
+            var userId = 0;
+            var didParsed = Int32.TryParse(userIdString, out userId);
+
+            if (!didParsed || userId == -1)
+            {
+                return Json(new { });
+            }
+
+            var userGender = _context.Users
+                .Where(x => x.Id == userId)
+                .Select(x => x.Gender)
+                .SingleOrDefault();
             /* ###############################
              * Creating the learning data
              * ############################### */
