@@ -77,7 +77,8 @@ namespace GRD.Controllers
                     userId = x.UserId.Value,
                     size = x.Product.Size,
                     type = x.Product.ProductTypeId,
-                    gender = x.User.Gender,
+                    gender = x.Product.ProductType.Gender,
+                    genderUser = x.User.Gender
                 })
                 .ToList();
 
@@ -86,6 +87,7 @@ namespace GRD.Controllers
                 double[] res = new double[]
                 {
                     Convert.ToInt32(x.gender),
+                    Convert.ToInt32(x.genderUser),
                     x.type.Value,
                     x.size
                 };
@@ -98,6 +100,7 @@ namespace GRD.Controllers
             {
                 CodificationVariable.Categorical,
                 CodificationVariable.Categorical,
+                CodificationVariable.Categorical,
                 CodificationVariable.Discrete
             };
 
@@ -107,11 +110,9 @@ namespace GRD.Controllers
             // Transform the mixed observations into only continuous:
             double[][] newInputs = model.ToDouble().Transform(inputs);
 
-            KMeans kmeans = new KMeans(k: 4)
+            KMedoids kmeans = new KMedoids(k: 4)
             {
-                // For example, let's say we would like to consider the importance of 
-                // the first column as 0.1, the second column as 0.7 and the third 0.9
-                Distance = new WeightedSquareEuclidean(new double[] { 3, 3, 1, 1, 1, 1, 1, 1, 1 })
+                Distance = new WeightedSquareEuclidean(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })
             };
             var clusters = kmeans.Learn(newInputs);
             int[] labels = clusters.Decide(newInputs);
@@ -126,12 +127,13 @@ namespace GRD.Controllers
                     userId = x.UserId.Value,
                     size = x.Product.Size,
                     type = x.Product.ProductTypeId,
-                    gender = x.User.Gender
+                    gender = x.Product.ProductType.Gender,
+                    genderUser = x.User.Gender
                 })
                 .GroupBy(x => x.userId)
                 .ToList();
 
-            IList<Tuple<int, int>> labelsForUsers = new List<Tuple<int, int>>();
+            IList<Tuple<int, int[]>> labelsForUsers = new List<Tuple<int, int[]>>();
             for (int i = 0; i < purchasesById.Count; i++)
             {
                 var userInputs = purchasesById[i].
@@ -140,6 +142,7 @@ namespace GRD.Controllers
                         double[] res = new double[]
                         {
                             Convert.ToInt32(x.gender),
+                            Convert.ToInt32(x.genderUser),
                             x.type.Value,
                             x.size
                         };
@@ -150,19 +153,19 @@ namespace GRD.Controllers
 
                 //double[][] newUserInputs = model.ToDouble().Transform(userInputs);
                 double[][] newUserInputs = model.ToDouble().Transform(userInputs);
-                var label = clusters.Decide(newUserInputs)
-                    .GroupBy(x => x)
-                    .Select(x => new
-                    {
-                        label = x,
-                        count = x.Count()
-                    })
-                    .OrderByDescending(x => x.count)
-                    .First()
-                    .label
-                    .Key;
-                //labelsForUsers.Add(new Tuple<int, int[]>(purchasesById[i].Key, clusters.Decide(newUserInputs).Distinct().ToArray()));
-                labelsForUsers.Add(new Tuple<int, int>(purchasesById[i].Key, label));
+                //var label = clusters.Decide(newUserInputs)
+                //    .GroupBy(x => x)
+                //    .Select(x => new
+                //    {
+                //        label = x,
+                //        count = x.Count()
+                //    })
+                //    .OrderByDescending(x => x.count)
+                //    .First()
+                //    .label
+                //    .Key;
+                labelsForUsers.Add(new Tuple<int, int[]>(purchasesById[i].Key, clusters.Decide(newUserInputs).Distinct().ToArray()));
+                //labelsForUsers.Add(new Tuple<int, int>(purchasesById[i].Key, label));
             }
 
             var productIdsUserBought = _context.Purchases
@@ -178,7 +181,8 @@ namespace GRD.Controllers
                     id = x.Id,
                     size = x.Size,
                     type = x.ProductTypeId,
-                    gender = userGender,
+                    gender = x.ProductType.Gender,
+                    genderUser = userGender
                 })
                 .ToList();
 
@@ -187,6 +191,7 @@ namespace GRD.Controllers
                 double[] res = new double[]
                 {
                     Convert.ToInt32(x.gender),
+                    Convert.ToInt32(x.genderUser),
                     x.type.Value,
                     x.size
                 };
@@ -202,7 +207,7 @@ namespace GRD.Controllers
             var userLabels = labelsForUsers.Where(x => x.Item1 == userId).FirstOrDefault().Item2;
             for (int i = 0; i < lol.Length; i++)
             {
-                if (userLabels == lol[i])
+                if (userLabels.Contains(lol[i]))
                 {
                     productIdsPrediction.Add(productsToPredict[i].id);
                 }
