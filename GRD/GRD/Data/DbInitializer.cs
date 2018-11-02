@@ -44,12 +44,12 @@ namespace GRD.Data
                 };
             var productTypes = new ProductType[]
             {
-                new ProductType{Name="מכנס גבר"},
-                new ProductType{Name="מכנס אישה"},
-                new ProductType{Name="חולצה גבר"},
-                new ProductType{Name="חולצה אישה"},
-                new ProductType{Name="נעליים גבר"},
-                new ProductType{Name="נעליים אישה"}
+                new ProductType{Gender=false,Name="מכנס גבר"},
+                new ProductType{Gender=true,Name="מכנס אישה"},
+                new ProductType{Gender=false,Name="חולצה גבר"},
+                new ProductType{Gender=true,Name="חולצה אישה"},
+                new ProductType{Gender=false,Name="נעליים גבר"},
+                new ProductType{Gender=true,Name="נעליים אישה"}
             };
             var products = new Product[]
                 {

@@ -13,6 +13,8 @@ namespace GRD.Models
         public int Id { get; set; }
         [Display(Name = "סוג מוצר")]
         public string Name { get; set; }
+        [Display(Name = "מין")]
+        public Boolean Gender { get; set; }
         [Display(Name = "מוצרים")]
         public virtual List<Product> Products { get; set; }
     }
