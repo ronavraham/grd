@@ -39,7 +39,7 @@ namespace GRD
             services.AddMvc(o => o.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(val => "חובה להזין מספר")).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddSessionStateTempDataProvider();
             services.AddSession();
 
-            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=fuck_colman;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=GolanLocal;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<ProjectContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
