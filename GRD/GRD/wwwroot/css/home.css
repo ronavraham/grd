@@ -53,9 +53,9 @@
 }
 
 .youtube_container {
-    float: left;
+    margin-left: 155px;
 }
 
 #weather_img {
-    margin-left: 155px;
+    height: 75px;
 }
