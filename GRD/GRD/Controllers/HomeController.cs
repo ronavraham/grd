@@ -213,8 +213,15 @@ namespace GRD.Controllers
                 }
             }
 
+            var validProductTypeIds = _context.Purchases
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Product.ProductTypeId)
+                .Distinct()
+                .ToList();
+
             var predictedProduct = _context.Products
                 .Where(x => productIdsPrediction.Contains(x.Id))
+                .Where(x => validProductTypeIds.Contains(x.ProductTypeId))
                 .ToList();
 
             //5int[] userLabels = clusters.Decide(userPurchaces);
