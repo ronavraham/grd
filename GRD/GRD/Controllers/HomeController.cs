@@ -110,10 +110,7 @@ namespace GRD.Controllers
             // Transform the mixed observations into only continuous:
             double[][] newInputs = model.ToDouble().Transform(inputs);
 
-            KMedoids kmeans = new KMedoids(k: 4)
-            {
-                Distance = new WeightedSquareEuclidean(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })
-            };
+            KMedoids kmeans = new KMedoids(k: 4);
             var clusters = kmeans.Learn(newInputs);
             int[] labels = clusters.Decide(newInputs);
 
@@ -151,21 +148,8 @@ namespace GRD.Controllers
                     })
                     .ToArray();
 
-                //double[][] newUserInputs = model.ToDouble().Transform(userInputs);
                 double[][] newUserInputs = model.ToDouble().Transform(userInputs);
-                //var label = clusters.Decide(newUserInputs)
-                //    .GroupBy(x => x)
-                //    .Select(x => new
-                //    {
-                //        label = x,
-                //        count = x.Count()
-                //    })
-                //    .OrderByDescending(x => x.count)
-                //    .First()
-                //    .label
-                //    .Key;
                 labelsForUsers.Add(new Tuple<int, int[]>(purchasesById[i].Key, clusters.Decide(newUserInputs).Distinct().ToArray()));
-                //labelsForUsers.Add(new Tuple<int, int>(purchasesById[i].Key, label));
             }
 
             var productIdsUserBought = _context.Purchases
@@ -174,8 +158,15 @@ namespace GRD.Controllers
                 .Distinct()
                 .ToList();
 
+            var validProductTypeIds = _context.Purchases
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Product.ProductTypeId)
+                .Distinct()
+                .ToList();
+
             var productsToPredict = _context.Products
                 .Where(x => !productIdsUserBought.Contains(x.Id))
+                .Where(x => validProductTypeIds.Contains(x.ProductTypeId))
                 .Select(x => new
                 {
                     id = x.Id,
@@ -213,18 +204,10 @@ namespace GRD.Controllers
                 }
             }
 
-            var validProductTypeIds = _context.Purchases
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Product.ProductTypeId)
-                .Distinct()
-                .ToList();
-
             var predictedProduct = _context.Products
                 .Where(x => productIdsPrediction.Contains(x.Id))
-                .Where(x => validProductTypeIds.Contains(x.ProductTypeId))
                 .ToList();
 
-            //5int[] userLabels = clusters.Decide(userPurchaces);
             return Json(1);
         }
 
