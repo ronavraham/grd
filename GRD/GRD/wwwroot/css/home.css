@@ -1,6 +1,9 @@
 ﻿.home_container {
     margin-right: 128px;
     margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .weather_container {
@@ -47,6 +50,10 @@
     display: flex;
     align-items: center;
     margin-right: -16px;
+}
+
+.youtube_container {
+    margin-left: 155px;
 }
 
 #weather_img {
