@@ -1,5 +1,8 @@
 ﻿.home_container {
-    margin-right: 128px;
+    padding-right: 128px;
+    padding-left: 128px;
+    display: flex;
+    flex-direction: column;
     margin-top: 16px;
 }
 
@@ -51,4 +54,11 @@
 
 #weather_img {
     height: 75px;
+}
+
+.predicted_products {
+    visibility: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    padding: 32px;
+    margin-top: 32px;
 }

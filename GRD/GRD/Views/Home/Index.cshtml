@@ -30,12 +30,17 @@
             <div id='wind_speed'></div>
         </div>
     </div>
+    <div class='predicted_products'>
+
+    </div>
 </div>
 
 <script src='~/lib/jquery/dist/jquery.js'></script>
 <script>
-    //$(document).ready(getLocation)
-    $(document).ready(fetchPossibleProducts)
+    $(document).ready(function () {
+        fetchPossibleProducts();
+        getLocation();
+    })
 
     function getLocation() {
         if (navigator.geolocation) {
@@ -62,9 +67,43 @@
             type: 'GET',
             url: '/Home/PredictPossibleProducts',
             contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
+            dataType: 'json',
+            success: displayProducts
         })
     }
+
+    function displayProducts(res) {
+        if (res.errorCode || res.products.length <= 0) {
+            $('.predicted_products').html('אנחנו בGRD חושבים עליכם כל היום ולכן אנו עושים את המאמצים בכדי להציע לכם את הדברים הכי רלוונטים ללקוחות האהובים שלנו.\nעם זאת, אין לנו מספיק נתונים בנוגע אלייך כרגע, אנא בצע רכישות כדי שנוכל להעניק את השירות הטוב ביותר.\nבאהבה, GRD')
+        } else {
+            var content = '<div>אנחנו בGRD חושבים עליכם כל היום, אז הנה כמה מוצרים שאולי יעניינו אתכם:</div></br></br>'
+            content += '<table class="table">' +
+                '<thead>' +
+                '<tr>' +
+                '<th class="index-table-th">שם' + '</th>' +
+                '<th class="index-table-th">מחיר' + '</th>' +
+                '<th class="index-table-th">מידה' + '</th>' +
+                '<th class="index-table-th">תמונה' + '</th>' +
+                '</tr>' +
+                '</thead>';
+
+            res.products.forEach(x => {
+                content += '<tr>' +
+                    '<td>' + x.name + '</td>' +
+                    '<td>' + x.price + '</td>' +
+                    '<td>' + x.size + '</td>' +
+                    '<td><img style="height: 10vh;width: 6vw;" src="/images/products/' + x.picture + '" /></td>' +
+                    '<td><a class="btn btn-default button" style="width:5vw" href="http://localhost:6781/Products/PurchaseProduct/'+ x.id + '">רכוש</a></td>'
+                '</tr>';
+            });
+
+            content += '</table>';
+
+            $('.predicted_products').html(content);
+        }
+        $('.predicted_products').css('visibility', 'visible');
+    }
+
 
     function getWeather(branch) {
         $.ajax({
