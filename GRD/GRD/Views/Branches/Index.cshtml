@@ -25,7 +25,7 @@
         <div class='branches_form_table_container'>
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
-                    <div class='advanced_search_fields'>
+                    <div class='advanced_search_fields branches_search'>
                         <div>@Html.DisplayNameFor(model => model.Name)</div>
                         <input type="text" name="Name" class="form-control advanced_search_field" value=@ViewData["BranchesNameQuery"] />
                         <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.City)</div>
@@ -33,7 +33,7 @@
                         <div class='advanced_search_field'>@Html.DisplayNameFor(model => model.Address)</div>
                         <input type="text" name="Address" class="form-control advanced_search_field" value=@ViewData["BranchesAddressQuery"] />
                     </div>
-                    <div class='advanced_search_submit'>
+                    <div class='advanced_search_submit branches_search'>
                         <input placeholder="ערך חיפוש" type="submit" value="חפש" class="btn btn-default button" />
                         <a asp-action="Index">בחזרה לרשימה מלאה</a>
                     </div>
@@ -42,61 +42,61 @@
             <table class="table branches_table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th class="index-table-th">
-                            @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th class="index-table-th">
-                            @Html.DisplayNameFor(model => model.City)
-                        </th>
-                        <th class="index-table-th">
-                            @Html.DisplayNameFor(model => model.Address)
+                            @Html.DisplayNameFor(model => model.IsSaturday)
                         </th>
                         <th class="index-table-th">
                             @Html.DisplayNameFor(model => model.Telephone)
                         </th>
                         <th class="index-table-th">
-                            @Html.DisplayNameFor(model => model.IsSaturday)
+                            @Html.DisplayNameFor(model => model.Address)
                         </th>
-                        <th></th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th class="index-table-th">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.City)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Telephone)
-                            </td>
-                            <td>
-                                @{
-                                    if (item.IsSaturday)
-                                    { <text>כן</text> }
-                                else
-                                { <text>לא</text> }
+                    <tr>
+                        <td>
+                            @{
+                                //var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
+                                if (isAdmin)
+                                {
+                                    <div>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                                    </div>
                                 }
-                            </td>
-                            <td>
-                                @{
-                                    //var isAdmin = Context.Session.GetString("isAdmin") == "true" ? true : false;
-                                    if (isAdmin)
-                                    {
-                                        <div>
-                                            <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                                            <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-                                        </div>
-                                    }
-                                }
-                            </td>
-                        </tr>
+                            }
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsSaturday)
+                                { <text>כן</text> }
+                            else
+                            { <text>לא</text> }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telephone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

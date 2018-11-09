@@ -100,9 +100,12 @@
     padding: 16px;
     margin-right: 128px;
     margin-left: 128px;
-    margin-top: -64px;
+    margin-top: -84px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     background: white;
+    margin-bottom: 32px;
+    height: 80%;
+    overflow: auto;
 }
 
 .button {

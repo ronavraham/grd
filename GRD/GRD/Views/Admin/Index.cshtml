@@ -2,27 +2,24 @@
     <h2 class='page_title'>מסך מנהל</h2>
 </div>
 
-<style>
-    .staistics {
-        direction: ltr;
-    }
-</style>
 
-<div>
-    <a id="twitt_button" class="twitter-share-button"
-       href="https://twitter.com/intent/tweet?text="
-       data-size="large">
-        Tweet
-    </a>
+<div class='admin_page_container'>
+    <div class='admin_twitt_container'>
+        <div class='twitt_label'>צייץ: </div>
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet?text="
+           data-size="large">
+        </a>
+    </div>
     
-    <div class='graphs_container'>
-        <div class='graph'>
+    <div class='admin_graph_container'>
+        <div class='admin_graph' id='graph_1'>
             <h1>מכירות של מוצרים בכל סניף</h1>
-            <div class="staistics" id="stat_1"></div>
+            <div id="stat_1"></div>
         </div>
-        <div class='graph'>
+        <div class='admin_graph' id='graph_2'>
             <h1>מכירות של כל המוצרים</h1>
-            <div class="staistics" id="stat_2"></div>
+            <div id="stat_2"></div>
         </div>
     </div>
 </div>
@@ -109,8 +106,6 @@
             .call(yAxis);
 
         svg.node();
-
-        $('.graphs_container').css('visibility', 'visible');
     }
 
     function createPieChartWithData(element, data) {

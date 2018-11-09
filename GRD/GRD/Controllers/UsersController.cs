@@ -68,7 +68,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,Password,Address,Id,Gender,IsAdmin")] User user)
+        public async Task<IActionResult> Create([Bind("Username,Password,Address,Gender,IsAdmin")] User user)
         {
             if (!IsAuthorized())
             {
@@ -76,11 +76,16 @@ namespace GRD.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (_context.Users.Any(e => e.Username == user.Username))
+                {
+                    ViewData["errorMessage"] = "שם משתמש זה קיים כבר במערכת";
+                    return View(nameof(Create));
+                }
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return BadRequest();
         }
 
         // GET: Users/Edit/5
@@ -108,7 +113,7 @@ namespace GRD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Username,Password,Address,Id,Gender,IsAdmin")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Username,Password,Address,Gender,Id,IsAdmin")] User user)
         {
             if (!IsAuthorized())
             {
@@ -123,6 +128,13 @@ namespace GRD.Controllers
             {
                 try
                 {
+                    // check if the edit user change it name, and if it did check if there is already Username in the db.
+                    if (_context.Users.AsNoTracking().FirstOrDefault(u => u.Id == id).Username != user.Username &&
+                        _context.Users.Any(e => e.Username == user.Username))
+                    {
+                        ViewData["errorMessage"] = "שם משתמש זה קיים כבר במערכת";
+                        return View(nameof(Edit));
+                    }
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -139,7 +151,7 @@ namespace GRD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return BadRequest();
         }
 
         // GET: Users/Delete/5

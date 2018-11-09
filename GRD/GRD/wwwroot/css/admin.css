@@ -1,4 +1,47 @@
-﻿.graphs_container {
+﻿.admin_page_container {
+    padding: 64px;
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+.admin_graph_container {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    visibility: hidden;
+}
+
+.admin_graph {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+}
+
+.admin_twitt_container {
+    display: flex;
+    align-items: center;
+}
+
+.twitt_label {
+    margin-left: 8px;
+    font-size: large;
+    font-weight: bold;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.graphs_container {
     display: flex;
     justify-content: space-around;
     visibility: hidden;

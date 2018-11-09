@@ -19,8 +19,15 @@
 .branches_form_table_container {
     width: 50%;
     margin-left: 16px;
+    overflow: auto;
+    direction: ltr;
+    padding: 16px;
 }
 
 .branches_content_container {
-    height: 100%;
+    height: 80%;
+}
+
+.branches_search {
+    flex-direction: row-reverse;
 }
