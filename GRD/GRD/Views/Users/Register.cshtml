@@ -1,0 +1,74 @@
+﻿@model GRD.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class='page_title_container'>
+    <h2 class='page_title'>הרשמה</h2>
+</div>
+
+@{
+    if (ViewData["errorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["errorMessage"]
+        </div>
+    }
+}
+
+<div class='create_edit_form_container'>
+    <form asp-action="Register" class='create_edit_form'>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Username" class="control-label"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="radio">
+                <label style="font-weight:bold">
+                    @Html.DisplayNameFor(model => model.Gender)
+                    @*<input asp-for="Gender" /> @Html.DisplayNameFor(model => model.Gender)*@
+                </label>
+                <div style="display:inline-block">
+                    <div>
+                        <input asp-for="Gender" type="radio" value="@false" id="male">
+                    </div>
+                    <div>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;זכר</label>
+                    </div>
+                </div>
+                <div style="display:inline-block">
+                    <div>
+                        <input asp-for="Gender" type="radio" value="@true" id="female">
+                    </div>
+                    <div>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;נקבה</label>
+                    </div>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+        <input type="hidden" asp-for="IsAdmin" value="@false" />
+        <div class="form-group form_footer">
+            <input type="submit" value="צור" class="btn btn-default button" />
+            <a asp-action="Login">בחזרה למסך התחברות</a>
+        </div>
+    </form>
+</div>
+
+</br>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

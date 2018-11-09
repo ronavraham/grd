@@ -88,6 +88,33 @@ namespace GRD.Controllers
             return BadRequest();
         }
 
+        // GET: Users/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: Users/Register
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("Username,Password,Address,Gender,IsAdmin")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_context.Users.Any(e => e.Username == user.Username))
+                {
+                    ViewData["errorMessage"] = "שם משתמש זה קיים כבר במערכת";
+                    return View(nameof(Register));
+                }
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return await Login(user.Username, user.Password);
+            }
+            return BadRequest();
+        }
+
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
