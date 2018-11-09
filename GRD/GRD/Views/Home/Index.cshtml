@@ -9,36 +9,42 @@
 
 
 <div class='home_container'>
-    <div class='weather_container'>
-        <div class='weather_branch_details'>
-            <div id='branch_name'></div>
-            <div class='branch_address_container'>
-                <div id='branch_city'></div>
-                <div id='branch_address'></div>
-            </div>
-            <div id='branch_phone'></div>
-        </div>
-        <div class='weather_details'>
-            <div class='degrees_and_img'>
-                <img id='weather_img' />
-                <div class='weather_degrees_container'>
-                    <div class='degrees_sign'>C°</div>
-                    <div id='weather_degrees' class='degrees'></div>
+    <div class='weather_youtube_container'>
+        <div class='weather_container'>
+            <div class='weather_branch_details'>
+                <div id='branch_name'></div>
+                <div class='branch_address_container'>
+                    <div id='branch_city'></div>
+                    <div id='branch_address'></div>
                 </div>
+                <div id='branch_phone'></div>
             </div>
-            <div id='humidity'></div>
-            <div id='wind_speed'></div>
+            <div class='weather_details'>
+                <div class='degrees_and_img'>
+                    <img id='weather_img' />
+                    <div class='weather_degrees_container'>
+                        <div class='degrees_sign'>C°</div>
+                        <div id='weather_degrees' class='degrees'></div>
+                    </div>
+                </div>
+                <div id='humidity'></div>
+                <div id='wind_speed'></div>
+            </div>
         </div>
+        <iframe src="https://www.youtube.com/embed/s4xnyr2mCuI" frameborder="0" allowfullscreen></iframe>
     </div>
+    
+    <div class='predicted_products'>
 
-    <div class='youtube_container'>
-        <iframe width="420" height="315" src="https://www.youtube.com/embed/3tmd-ClpJxA" frameborder="0" allowfullscreen></iframe>
     </div>
 </div>
 
 <script src='~/lib/jquery/dist/jquery.js'></script>
 <script>
-    $(document).ready(getLocation)
+    $(document).ready(function () {
+        fetchPossibleProducts();
+        getLocation();
+    })
 
     function getLocation() {
         if (navigator.geolocation) {
@@ -49,7 +55,7 @@
     function fetchNearestBranch(position) {
         $.ajax({
             type: 'GET',
-            url: '/Home/AjaxGetCall',
+            url: '/Home/NearestBranch',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: getWeather,
@@ -59,6 +65,49 @@
             }
         })
     }
+
+    function fetchPossibleProducts() {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/PredictPossibleProducts',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: displayProducts
+        })
+    }
+
+    function displayProducts(res) {
+        if (res.errorCode || res.products.length <= 0) {
+            $('.predicted_products').html('אנחנו בGRD חושבים עליכם כל היום ולכן אנו עושים את המאמצים בכדי להציע לכם את הדברים הכי רלוונטים ללקוחות האהובים שלנו.\nעם זאת, אין לנו מספיק נתונים בנוגע אלייך כרגע, אנא בצע רכישות כדי שנוכל להעניק את השירות הטוב ביותר.\nבאהבה, GRD')
+        } else {
+            var content = '<div>אנחנו בGRD חושבים עליכם כל היום, אז הנה כמה מוצרים שאולי יעניינו אתכם:</div></br></br>'
+            content += '<table class="table">' +
+                '<thead>' +
+                '<tr>' +
+                '<th class="index-table-th">שם' + '</th>' +
+                '<th class="index-table-th">מחיר' + '</th>' +
+                '<th class="index-table-th">מידה' + '</th>' +
+                '<th class="index-table-th">תמונה' + '</th>' +
+                '</tr>' +
+                '</thead>';
+
+            res.products.forEach(x => {
+                content += '<tr>' +
+                    '<td>' + x.name + '</td>' +
+                    '<td>' + x.price + '</td>' +
+                    '<td>' + x.size + '</td>' +
+                    '<td><img style="height: 10vh;width: 6vw;" src="/images/products/' + x.picture + '" /></td>' +
+                    '<td><a class="btn btn-default button" style="width:5vw" href="http://localhost:6781/Products/PurchaseProduct/'+ x.id + '">רכוש</a></td>'
+                '</tr>';
+            });
+
+            content += '</table>';
+
+            $('.predicted_products').html(content);
+        }
+        $('.predicted_products').css('visibility', 'visible');
+    }
+
 
     function getWeather(branch) {
         $.ajax({
