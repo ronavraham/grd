@@ -52,10 +52,6 @@
     margin-right: -16px;
 }
 
-.youtube_container {
-    margin-left: 155px;
-}
-
 #weather_img {
     height: 75px;
 }
@@ -65,4 +61,11 @@
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     padding: 32px;
     margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.weather_youtube_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

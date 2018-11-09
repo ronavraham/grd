@@ -1,15 +1,14 @@
 ﻿.admin_page_container {
     padding: 64px;
-    animation-name: fade;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
+    visibility: hidden;
 }
 .admin_graph_container {
     margin-top: 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    visibility: hidden;
 }
 
 .admin_graph {
@@ -24,6 +23,9 @@
 .admin_twitt_container {
     display: flex;
     align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    width: 200px;
 }
 
 .twitt_label {
@@ -44,29 +46,5 @@
 .graphs_container {
     display: flex;
     justify-content: space-around;
-    visibility: hidden;
-}
-
-.graph {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-}
-
-.twitter_button {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 32px;
-    margin-top: -32px;
-    margin-right: 32px;
-    background: #FF4081;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-}
-
-.twitter_button_container {
     visibility: hidden;
 }
