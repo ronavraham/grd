@@ -18,7 +18,7 @@
             <div id="stat_1"></div>
         </div>
         <div class='admin_graph' id='graph_2'>
-            <h1>מכירות של כל המוצרים</h1>
+            <h1>מכירות לפי סוגי מוצרים</h1>
             <div id="stat_2"></div>
         </div>
     </div>
@@ -68,7 +68,7 @@
         var colors = ['#F44336', '#5C6BC0', '#1E88E5', '#4DD0E1', '#0288D1', '#00897B'];
         var margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
         var height = 300;
-        var width = 500;
+        var width = 430;
         var yAxis = g => g
             .attr("transform", `translate(${margin.left},0)`)
             .call(d3.axisLeft(y))

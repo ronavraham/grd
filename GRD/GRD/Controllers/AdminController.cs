@@ -72,15 +72,15 @@ namespace GRD.Controllers
                 (product => product.Id),
                 (pur, pro) => new
                 {
-                    productId = pro.Id,
-                    productName = pro.Name,
+                    ProductTypeId = pro.ProductTypeId,
+                    productName = pro.ProductType.Name,
                     count = pur.Count
                 })
-            .GroupBy(b => b.productId)
+            .GroupBy(b => b.ProductTypeId)
             .Select(p => new
             {
                 Count = p.Sum(pur => pur.count),
-                Name = p.First(pur => pur.productId == p.Key).productName,
+                Name = p.First(pur => pur.ProductTypeId == p.Key).productName,
                 Id = p.Key
             });
 
