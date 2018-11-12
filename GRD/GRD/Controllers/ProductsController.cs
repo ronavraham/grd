@@ -228,8 +228,8 @@ namespace GRD.Controllers
                        fileToUpdate = _staticImagesRoute + file.FileName;
 
                 // Delete the previus image file
-                FileInfo deleteFile = new FileInfo(FileToDelete);
-                deleteFile.Delete();
+                //FileInfo deleteFile = new FileInfo(FileToDelete);
+                //deleteFile.Delete();
 
                 // put the new picture name to product object
                 product.PictureName = file.FileName;
@@ -330,8 +330,8 @@ namespace GRD.Controllers
             }
             product.Purchases.ToList().ForEach(p => product.Purchases.Remove(p));
             // delete the product image from fs
-            FileInfo deleteFile = new FileInfo(_staticImagesRoute + product.PictureName);
-            deleteFile.Delete();
+            //FileInfo deleteFile = new FileInfo(_staticImagesRoute + product.PictureName);
+            //deleteFile.Delete();
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

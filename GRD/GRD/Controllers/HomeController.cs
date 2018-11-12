@@ -75,6 +75,7 @@ namespace GRD.Controllers
 
             var trainData = _context.Purchases
                 .OrderBy(x => x.UserId)
+                .Where(x => x.Product != null)
                 .Select(x => new
                 {
                     userId = x.UserId.Value,
@@ -126,6 +127,7 @@ namespace GRD.Controllers
             knn5.Learn(newInputs, labels);
 
             var purchasesById = _context.Purchases
+                .Where(x => x.Product != null)
                 .Select(x => new
                 {
                     userId = x.UserId.Value,
